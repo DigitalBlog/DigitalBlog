@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import "_macros.html" as macros with context %}
+{% block app_content %}
+<style>
+    .center {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+    }
+    .center button {
+      padding:0px 0px;
+      border:1px solid #fff;
+      color:#fff;
+      background:transparent;
+      font-size:16px;
+      cursor:pointer;
+    }
+    .popup {
+      position:fixed;
+      top:50%;
+      left:0px;
+      width:0%;
+      height:0%;
+      transform:translateY(-50%);
+      background:#e6e6ff;
+      overflow:hidden;
+      z-index:99999999999999999999999999999999999999999999999999999999;
+    }
+    .popup .content {
+      width:100%;
+      height: 100%;
+      opacity:0;
+    }
+    .popup .content .popup-close-btn {
+      position:absolute;
+      top:0px;
+      right:0px;
+      width:40px;
+      height:40px;
+      text-align:center;
+      line-height:40px;
+      color:#111;
+      font-size:30px;
+      cursor:pointer;
+      border-radius:50%;
+    }
+    .popup .content .popup-close-btn:hover {
+      background:rgba(238, 238, 238, 0.9);
+    }
+    .popup .content h1 {
+      font-size:40px;
+    }
+    .popup .content p {
+      color:#555;
+    }
+    
+    .popup.active {
+      animation: popupAnimation 1500ms ease-in-out forwards;
+    }
+    .popup.dis {
+      animation: popupAnimationRev 1500ms ease-in-out forwards;
+    }
+    .popup.active .content {
+      opacity:1;
+      transition:all 300ms ease-in-out 1500ms;
+    }
+    @keyframes popupAnimation {
+      0% {
+        width:0%;
+        height:0%;
+      }
+      50% {
+        width:100%;
+        height:2px;
+      }
+      100% {
+        width:100%;
+        height:100%;
+      }
+    }
+    @keyframes popupAnimationRev {
+      100% {
+        width:0%;
+        height:0%;
+      }
+      50% {
+        width:100%;
+        height:2px;
+      }
+      0% {
+        width:100%;
+        height:100%;
+      }
+    }
+    </style>
+<div>
+            </td>
+        </tr>
+        {% set user_link %}
+                    <span class="user_popup">
+                        <a class="userLink" href="{{ url_for('main.user', username=post.author.username) }}">            
+                            {{ post.author.username }}
+                        </a>
+                    </span>
+                {% endset %}
+       <div class="post-thumbnail">
+                <a href="{{ url_for('main.user', username=post.author.username) }}">
+                    <img loading="lazy" alt="{{post.author.username}} Avatar" class="img-round-small profile-thumbnail href" src="{{ post.author.avatar()}}">
+                </a>
+            </div>
+            {% if not current_user.is_anonymous %}
+            {% if post.author == current_user or current_user.admin() %}
+        <a href="{{ url_for('main.update_post', post_id=post.id) }}"><span style='font-size:24px;color:blue;float:right;' class="fa fa-pencil href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Редактировать"></span></a>
+    {% endif %}
+    {% if not current_user.is_favourited_post(post) %}
+                <a href="{{ url_for('main.favourite_post', post_id=post.id, url=request.url) }}">
+                    <i style="color:red; font-size:24px; float:right;" class="fa-regular fa-heart href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Добавить в избранное"> {{post.favourites_count}} </i>
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.unfavourite_post', post_id=post.id, url=request.url) }}">
+                    <i style="color:red; font-size:24px; float:right;" class="fa-solid fa-heart href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Убрать из избранного"> {{post.favourites_count}} </i>
+                </a>
+                {% endif %}
+   {% else %}
+  <p>
+                    <i style="color:red; font-size:24px; float:right;" class="fa fa-heart" aria-hidden="true"> {{post.favourites_count}} </i>
+                </p>
+    {% endif %}
+      <h3 class="post-title">{{post.title}}{% if not post.show %}<span style="font-size:10px;">Скрыто</span>{% endif %}</h3>
+            <div class="post-content">
+                <div class="post-author"><strong class="userLink"><i class="fa fa-user fa-fw" aria-hidden="true"></i> {{ user_link }}</strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;</div>
+                <div class="post-date"><strong><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> {{ moment(post.timestamp).format('LLL') }}</strong>{% if post.timestamp!=post.last_update_time %}&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-pencil fa-fw"></i> {{ moment(post.last_update_time).format('LLL') }}</strong>{% endif %}&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa fa-eye fa-fw" aria-hidden="true"></i> {{post.views.count()}}</strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-comments fa-fw" aria-hidden="true"></i> {{post.comments.count()}}</strong></div>
+      <hr>
+      <a style="font-size:1.5em;color:blue;float: left; text-decoration: none;" class="no-href" target="_blank" href="{{ url_for('main.post_body', post_id=post.id) }}">Открыть в новой вкладке</a>
+      <i style="font-size:2em;color:blue;float: right; padding-right: 5px;" id="popup-open-btn" class="fa-solid fa-maximize fa-fw"></i>
+      <div class="popup">
+      <div id="postBodyPopup" class="content">
+        <div class="popup-close-btn"><i class="fa-solid fa-xmark fa-fw"></i></div>
+      </div>
+    </div>
+      <div id="postBody">
+      </div>
+      {% if file %}
+      <hr>
+      <a href="{{url_for('main.download_file_from_post', post_id=post.id)}}" class="btn btn-warning no-href"><i class="fa fa-download fa-fw"></i> ФАЙЛ</a>
+      <a href="{{url_for('main.file_from_post', post_id=post.id)}}" target="_blank" class="btn btn-primary no-href"><i class="fa-regular fa-eye fa-fw"></i> ФАЙЛ</a>
+      {% endif %}
+      <hr>
+    {% if post.allow_comments==True %}
+        <div>
+            <h3><i class="fa-solid fa-comments fa-fw" aria-hidden="true"></i> Комментарии: {{ post.comments.count() }}</h3>
+          {% if not current_user.is_anonymous %}
+          {{ macros.markdownWidget(form) }}
+          {% endif %}
+          <ul class="comments">
+            {% for comment in comments %}
+            {% include '_comment.html' %}
+          {% endfor %}
+          </ul>
+          <div class="text-center">
+          <div class="pagination" >
+        {{ macros.pagination_widget(pagination, 'main.post_detail', post_id=post.id) }}
+          </div>
+          </div>
+        </div>
+    </div>
+    {% else %}
+            <div>
+            <h3><i class="fa-solid fa-comment-slash fa-fw" aria-hidden="true"></i> Комментарии отключены</h3>
+            </div>
+    {% endif %}
+    <script id="rendered-js" >
+    document.querySelector("#popup-open-btn").addEventListener("click", function () {
+      document.querySelector(".popup").classList.add("active");
+      document.querySelector(".popup").classList.remove("dis");
+      let elem = document.getElementById('postBodyPopup');
+      let frame = document.getElementById('postBodyPopupFrame');
+      if (frame == null) {
+        elem.insertAdjacentHTML("afterbegin", '<iframe id="postBodyPopupFrame" src="/post/{{post.id}}/body" height="102.5%" width="100%" style="border: none;"></iframe>');
+      }
+    });
+    document.querySelector(".popup .popup-close-btn").addEventListener("click", function () {
+      document.querySelector(".popup").classList.remove("active");
+      document.querySelector(".popup").classList.add("dis");
+    });
+      </script>
+<script>
+window.addEventListener("load", () => {
+    let elem = document.getElementById('postBody');
+    elem.insertAdjacentHTML("afterbegin", '<iframe src="/post/{{post.id}}/body" height="500px" width="100%" style="border: none;"></iframe>');
+});
+</script>
+{% endblock %}

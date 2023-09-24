@@ -1,0 +1,96 @@
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="https://digitalblog.github.io/cdn/css/alert.css">
+<link type="image/x-icon" rel="shortcut icon" href="https://digitalblog.github.io/cdn/img/icons/favicon.ico">
+<link type="image/png" sizes="16x16" rel="icon" href="https://digitalblog.github.io/cdn/img/icons/16x16.png">
+<link type="image/png" sizes="48x48" rel="icon" href="https://digitalblog.github.io/cdn/img/icons/48x48.png">
+<link type="image/png" sizes="128x128" rel="icon" href="https://digitalblog.github.io/cdn/img/icons/128x128.png">
+<link rel="apple-touch-icon" href="https://digitalblog.github.io/cdn/img/icons/apple-touch-icon.png">
+<link rel="preload" href="https://digitalblog.github.io/cdn/font-awesome/css/fontawesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://digitalblog.github.io/cdn/font-awesome/css/fontawesome.min.css"></noscript>
+<link rel="preload" href="https://digitalblog.github.io/cdn/font-awesome/css/solid.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://digitalblog.github.io/cdn/font-awesome/css/solid.min.css"></noscript>
+<meta name="yandex-verification" content="54fc721e6ac6e423" />
+<meta name="google-site-verification" content="PrJPeM5Mx3iqb2kDzF9HGJ1dFe5iCgfsFnVO5Su48tA" />
+<meta charset="utf-8">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&amp;family=Open+Sans:ital@0;1&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&amp;family=Open+Sans:ital@0;1&amp;display=swap"></noscript>
+<style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+.loader-body{width:100%;height:100vh;background-color:#e6e6ff;position:fixed;z-index:999999999;visibility:visible;top:0;left:0;text-align:center;justify-content:center;align-content:center;transition:.5s all}.loader{width:100px;height:100px;border:12px solid #fff;border-radius:50%;position:absolute;
+	/*change color of border*/ border-top-color:rgb(144, 0, 255);transform:translate(-50%,-50%);top:50%;left:50%;-webkit-animation:0.75s spin infinite linear;-o-animation:0.75s spin infinite linear;animation:0.75s spin infinite linear}.loader-body.done{visibility:hidden;opacity:0}@keyframes spin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+</style>
+<script>
+window.onload = function() {
+    var preloader = document.getElementById('loader');
+    preloader.classList.toggle('done');
+      (function(d, w, c) {
+      w.BrevoConversationsID = '64afe5ccda69c95cfa71c0c6';
+      w[c] = w[c] || function() {
+          (w[c].q = w[c].q || []).push(arguments);
+      };
+      var s = d.createElement('script');
+      s.async = true;
+      s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+      if (d.head) d.head.appendChild(s);
+  })(document, window, 'BrevoConversations');
+    document.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A' &&
+        e.target.href.startsWith("https://digitalblog.repl.co/") &&
+        !e.target.classList.contains('no-href')) {
+        var preloader = document.getElementById('loader');
+        preloader.classList.toggle('done');
+    }
+    });
+    document.addEventListener('click', function(e) {
+      if ((e.target.classList.contains('href'))) {
+        var preloader = document.getElementById('loader');
+        preloader.classList.toggle('done');
+      }
+    });
+};
+</script>
+</head>
+<body>
+<script src="https://digitalblog.github.io/cdn/js/jquery.min.js"></script>
+<script src="https://digitalblog.github.io/cdn/js/alert.js"></script>
+<div class="loader-body" id="loader">
+    <div class="loader"></div>
+</div>
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for category, msg in get_flashed_messages(with_categories=True) %}
+<script>
+{% if category=="danger" %}
+Alert.error("{{msg}}",'Ошибка!',{displayDuration: 5000})
+{% elif category=="warning" %}
+Alert.warning("{{msg}}",'Внимание!',{displayDuration: 5000})
+{% elif category=="success" %}
+Alert.success("{{msg}}",'Успешно!',{displayDuration: 5000})
+{% elif category=="info" %}
+Alert.info("{{msg}}",'К сведению',{displayDuration: 5000})
+{% endif %}
+</script>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+<!-- Yandex.Metrika counter -->
+<script defer type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(92426514, "init", {
+        clickmap:false,
+        trackLinks:false,
+        accurateTrackBounce:false,
+        webvisor:false
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/92426514" style="position:absolute; left:-9999px;" alt="" /></div></noscript>

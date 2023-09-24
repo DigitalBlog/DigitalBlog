@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import "_macros.html" as macros with context %}
+
+{% block scripts %}
+    {{ super() }}
+    <script defer src="https://digitalblog.github.io/cdn/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script defer src="https://digitalblog.github.io/cdn/js/tinymce_setup.js"></script>
+{% endblock %}
+
+{% block app_content %}
+    <h1>{{ title }}</h1>
+{{ macros.tinyMCE1Widget(form) }}
+{% endblock %}

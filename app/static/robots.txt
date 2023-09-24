@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /messages
+Crawl-delay: 20
+Sitemap: https://digitalblog.repl.co/sitemap.xml

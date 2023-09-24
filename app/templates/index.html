@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import "_macros.html" as macros with context %}
+{% block app_content %}
+    <h1>{{ title }}</h1>
+    <div class="dropdown">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    Сортировать по: {% if order=='6' %}Дате последнего изменения ↑{% elif order=='5' %}Дате последнего изменения ↓{% elif order=='4' %}По количеству избранных ↑{% elif order=='3' %}По количеству избранных ↓{% elif order=='2' %}Дате создания ↑{% else %}Дате создания ↓{% endif %}
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+    <li><a href='' onclick="document.cookie='order_posts=1'; location.reload();">Дате создания ↓</a></li>
+    <li><a href='' onclick="document.cookie='order_posts=2'; location.reload();">Дате создания ↑</a></li>
+    <li><a href='' onclick="document.cookie='order_posts=5'; location.reload();">Дате последнего изменения ↓</a></li>
+    <li><a href='' onclick="document.cookie='order_posts=6'; location.reload();">Дате последнего изменения ↑</a></li>
+    <li><a href='' onclick="document.cookie='order_posts=3'; location.reload();">По количеству избранных ↓</a></li>
+    <li><a href='' onclick="document.cookie='order_posts=4'; location.reload();">По количеству избранных ↑</a></li>
+    </ul>
+    </div>
+{% if not current_user.is_anonymous %}
+    <div class="post-tabs">
+    <ul class="nav nav-tabs nav-justified">
+        <li{% if show_posts=='1'  %} class="active"{% endif %}><a href="" onclick="document.cookie='show_posts=1'; location.reload();">Все публикации <span class="badge href">{{Post.query.count()}}</span></a></li>
+            <li{% if show_posts=='2'  %} class="active"{% endif %}><a href="" onclick="document.cookie='show_posts=2'; location.reload();">Избранное <span class="badge href">{{current_user.favourited_posts.count()}}</span></a></li>
+        {% if current_user.blogger %}
+            <li{% if show_posts=='3' %} class="active"{% endif %}><a href="" onclick="document.cookie='show_posts=3'; location.reload();">Мои публикации <span class="badge href">{{current_user.posts.count()}}</span></a></li>
+        {% endif %}            
+            <li{% if show_posts=='4' %} class="active"{% endif %}><a href="" onclick="document.cookie='show_posts=4'; location.reload();">Подписки <span class="badge href">{{current_user.followed_posts().count()}}</span></a></li>
+    </ul>
+</div>
+{% endif %}
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+    {% if not posts  %}
+    <div align="center"><p class="text-muted">Ничего не найдено</p></div>
+    {% endif %}
+    <div class="text-center">
+    <div class="pagination" >
+        {{ macros.pagination_widget(pagination, request.endpoint) }}
+    </div>
+    </div>
+{% endblock %}

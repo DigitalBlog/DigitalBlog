@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros with context %}
+{% block app_content %}
+     <h1>{{ _("Пользователи DigitalBlog") }}</h1>
+     {% if not current_user.is_anonymous %}
+     <div class="post-tabs">
+    <ul class="nav nav-tabs nav-justified">
+        <li{% if show_users=='1'  %} class="active"{% endif %}><a href="" onclick="document.cookie='show_users=1'; location.reload();">Все <span class="badge href">{{User.query.count()}}</span></a></li>
+        <li{% if show_users=='2' %} class="active"{% endif %}><a href="" onclick="document.cookie='show_users=2'; location.reload();">Друзья <span class="badge href">{{current_user.friends().count()}}</span></a></li>
+            <li{% if show_users=='3' %} class="active"{% endif %}><a href="" onclick="document.cookie='show_users=3'; location.reload();">Подписки <span class="badge href">{{current_user.followed.count()}}</span></a></li>
+            <li{% if show_users=='4' %} class="active"{% endif %}><a href="" onclick="document.cookie='show_users=4'; location.reload();">Подписчики <span class="badge href">{{current_user.followers.count()}}</span></a></li>
+            {% if current_user.admin() %}
+            <li{% if show_users=='5' %} class="active"{% endif %}><a href="" onclick="document.cookie='show_users=5'; location.reload();">Неподтверждённые <span class="badge href">{{User.query.filter_by(confirmed=False).count()}}</span></a></li>
+            <li{% if show_users=='6' %} class="active"{% endif %}><a href="" onclick="document.cookie='show_users=6'; location.reload();">Заблокированные <span class="badge href">{{User.query.filter_by(banned=True).count()}}</span></a></li>
+            {% endif %}
+    </ul>
+</div>
+{% endif %}
+<br>
+    {% for user in users %}
+        {% if user.id!=current_user.id %}
+        {% include '_user.html' %}
+        {% else %}
+    <div class="row">
+            <div class="well well-sm">
+                <div class="media">
+                    <a class="pull-left" href="{{url_for('main.user', username=current_user.username)}}">
+                        <img loading="lazy" alt="{{current_user.username}} Avatar" class="img-round-small href" src="{{ current_user.avatar() }}">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ current_user.username }} - Вы
+                <a href="{{ url_for('main.edit_profile') }}"><span class='fa fa-pencil href' style='font-size:18px;color:orange; float: right;'></span></a></h4>
+                    </div>
+                </div>
+        </div>
+	</div>
+        {% endif %}
+    {% endfor %}
+    {% if not users  %}
+    <div align="center"><p class="text-muted">{{ _("Ничего не найдено") }}</p></div>
+    {% endif %}
+    <div class="text-center">
+    <div class="pagination" >
+        {{ macros.pagination_widget(pagination, 'main.users') }}
+    </div>
+    </div>
+{% endblock %}

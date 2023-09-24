@@ -1,0 +1,63 @@
+{% set user_link %}
+<span class="user_popup">
+    <a class="userLink" href="{{ url_for('main.user', username=comment.author.username) }}">            
+         {{ comment.author.username }}
+                        </a>
+</span>
+{% endset %}
+<li class="comment">
+                    <div class="comment-thumbnail">
+                        <a class="href" href="{{ url_for('main.user', username=comment.author.username) }}">
+                            <img loading="lazy" alt="{{comment.author.username}} Avatar" class="comment img-round-small href" src="{{ comment.author.avatar() }}">
+                        </a>
+                    </div>
+                    <div class="comment panel panel-default">
+                        <div class="panel-heading">
+                            <div class="post-author"><strong class="userLink"><i class="fa fa-user fa-fw" aria-hidden="true"></i> {{ user_link }}</strong>&nbsp;<strong style="color:#999">·</strong>&nbsp;</div>
+                <div class="post-date"><strong><i class="fa fa-calendar fa-fw"></i> {{ moment(comment.timestamp).format('LLL') }}</strong>{% if comment.timestamp!=comment.last_update_time %}&nbsp;<strong style="color:#999">·</strong>&nbsp;<strong><i class="fa-solid fa-pencil fa-fw"></i> {{ moment(comment.last_update_time).format('LLL') }}</strong>{% endif %}{% if request.endpoint!='main.post_detail' %}&nbsp;<strong style="color:#999">·</strong>&nbsp;<a class="userLink" href="{{url_for('main.post_detail', post_id=comment.post.id)}}"><strong class="href"><i class="fa-solid fa-newspaper fa-fw"></i>&nbsp;{{comment.post.title}}</strong></a>{% 
+endif %}</div>
+                            {% if not current_user.is_anonymous %}
+                            {% if comment.author == current_user or current_user.admin() or current_user.moderator() %}
+               <a data-toggle="modal" data-target="#deleteComment{{comment.id}}"><span class="fa fa-trash" aria-hidden="true" style='font-size:18px;color:red;float:right;' data-toggle="tooltip" data-placement="bottom" title="Удалить"></span></a>
+               <div class="modal fade" id="deleteComment{{comment.id}}" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="deleteComment{comment.id}Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Удалить комментарий?
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button></h5>
+        </div>
+        <div class="modal-footer">
+          <form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.delete_comment', comment_id=comment.id, url=request.url) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Удалить">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+                <a href="{{ url_for('main.update_comment', comment_id=comment.id, url=request.url) }}">
+                    <span style='font-size:18px;color:blue; float:right;' class="fa fa-pencil href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Редактировать"></span>
+                </a>
+                {% endif %}
+                {% if not current_user.is_liking_comment(comment) %}
+                <a href="{{ url_for('main.like_comment', comment_id=comment.id, url=request.url) }}">
+                    <i style="color:red; font-size:18px; float:right;" class="fa-regular fa-heart href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Лайкнуть"> {{comment.likes.count()}} </i>
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.unlike_comment', comment_id=comment.id, url=request.url) }}">
+                    <i style="color:red; font-size:18px; float:right;" class="fa fa-heart href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Убрать лайк"> {{comment.likes.count()}} </i>
+                </a>
+                {% endif %}
+                {% else %}
+                <a>
+                    <i style="color:red; font-size:18px; float:right;" class="fa fa-heart"> {{comment.likes.count()}} </i>
+                </a>
+                {% endif %}
+                        </div>
+                        <div class="panel-body">
+                         {{ m(comment.comment) | safe }}                               
+                        </div>
+                      
+                    </div>
+                </li>

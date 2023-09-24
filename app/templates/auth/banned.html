@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вы заблокированы - DigitalBlog</title>
+    <style>
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6e6ff;
+}
+:where(.container, form, .input-field, header) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  background: #fff;
+  min-height: 40vh;
+  padding: 30px 40px;
+  overflow: hidden;
+  border-radius: 12px;
+  row-gap: 20px;
+  max-width: 345px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.container header {
+  height: 65px;
+  width: 65px;
+  background: #a340f4;
+  color: #fff;
+  font-size: 2.5rem;
+  border-radius: 50%;
+}
+.container h4 {
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+  font-weight: 500;
+}
+.container p {
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  font-weight: 500;
+}
+.container a{
+  font-size: 1rem;
+  color: rgb(90, 70, 143);
+  text-decoration: none;
+  font-weight: 500;
+}
+    </style>
+    {% include '_layout.html' %}
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <i class="fa-solid fa-triangle-exclamation fa-fw"></i>
+      </header>
+      <h4>Вы заблокированы!</h4>
+      <p>Нам очень жаль, но вы можете написать в чат, в правом нижнем углу узнать причину и попробовать вернуть свой аккаунт.<br>Причина блокировки: {% if reason!="" %}{{ reason }}{% else %}не указана{% endif %}</p>
+    </div>

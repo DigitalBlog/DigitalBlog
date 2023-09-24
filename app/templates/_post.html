@@ -1,0 +1,41 @@
+{% if post.show or current_user.admin() or current_user==post.author %}
+<table class="table table-hover">
+            <td>
+                {% set user_link %}
+                    <span class="user_popup">
+                        <a class="userLink" href="{{ url_for('main.user', username=post.author.username) }}">            
+                            {{ post.author.username }}
+                        </a>
+                    </span>
+                {% endset %}
+                {% if not current_user.is_anonymous %}
+                {% if post.author == current_user or current_user.admin() %}
+                <a href="{{ url_for('main.update_post', post_id=post.id) }}">
+                    <span style='font-size:18px;color:blue; float:right;' class="fa fa-pencil href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Редактировать"></span>
+                </a>
+  {% endif %}
+  {% if not current_user.is_favourited_post(post) %}
+                <a href="{{ url_for('main.favourite_post', post_id=post.id, url=request.url) }}">
+                    <i style="color:red; font-size:18px; float:right;" class="fa-regular fa-heart href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Добавить в избранное"> {{post.favourites_count}} </i>
+                </a>
+                {% else %}
+                <a href="{{ url_for('main.unfavourite_post', post_id=post.id, url=request.url) }}">
+                    <i style="color:red; font-size:18px; float:right;" class="fa fa-heart href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Убрать из избранного"> {{post.favourites_count}} </i>
+                </a>
+                {% endif %}
+                {% else %}
+                <a>
+                    <i style="color:red; font-size:18px; float:right;" class="fa fa-heart"> {{post.favourites_count}} </i>
+                </a>
+                {% endif %}
+                <div class="post-thumbnail">
+                <a href="{{ url_for('main.user', username=post.author.username) }}">
+                    <img loading="lazy" alt="{{post.author.username}} Avatar" class="img-round-small profile-thumbnail href" src="{{ post.author.avatar() }}" />
+                </a>
+               </div>
+                <h3 class="post-title"><a href="{{ url_for('main.post_detail', post_id=post.id)}}" class="post-link">{{post.title}}</a>{% if not post.show %}<span style="font-size:10px;">Скрыто</span>{% endif %}</h3>    
+                <div class="post-author"><strong class="userLink"><i class="fa fa-user fa-fw" aria-hidden="true"></i> {{ user_link }}</strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;</div>
+                <div class="post-date"><strong><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> {{ moment(post.timestamp).format('LLL') }}</strong>{% if post.timestamp!=post.last_update_time %}&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-pencil fa-fw"></i> {{ moment(post.last_update_time).format('LLL') }}</strong>{% endif %}&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa fa-eye fa-fw" aria-hidden="true"></i> {{post.views.count()}}</strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-comments fa-fw" aria-hidden="true"></i> {{post.comments.count()}}</strong></div>
+                </td>
+    </table>
+{% endif %}

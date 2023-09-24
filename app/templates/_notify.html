@@ -1,0 +1,63 @@
+<table class="table table-hover">
+    <tr>
+        <td>
+            <div class="post-thumbnail">
+                <a>
+                    <img loading="lazy" alt="Notify Logo" class="img-round-small profile-thumbnail" src="https://digitalblog.github.io/cdn/img/default.webp" />
+                </a>
+            </div>
+            <h3 class="post-title">
+                <p class="post-link">{{ n.title }} {% if current_user.last_notify_read_time < n.timestamp %}<span style="background-color: rgb(36 233 17 / 8%); color: #46ba4f;" class="badge">{{ _("Новое!") }}</span>{% endif %}</p>
+            </h3>
+            <div class="post-date">
+                <strong>
+                    <i class="fa fa-calendar fa-fw" aria-hidden="true"></i> {{ moment(n.timestamp).format('LLL') }}
+                </strong>
+            </div>
+            {% set show_more = len(n.body) > 100 %}
+            <div style="position: relative;padding: 10px 0;overflow: hidden;margin-bottom: 10px;" id="post-body">
+
+                {% if show_more != False %}
+                    <div id="collapsed-content{{n.id}}">
+                        {{ n.body | safe | striptags | truncate(length=100, killwords=False, end="...") }}
+                    </div>
+                    <div id="expanded-content{{n.id}}" style="display: none;">
+                        {{ n.body | safe }}
+                    </div>
+                {% else %}
+                    {{ n.body | safe }}
+                {% endif %}
+
+            </div>
+            
+                {% if show_more != False %}
+            <div class="post-footer">
+                    <a class="no-href" style="color: rgb(144, 149, 152);" href="#" id="read-more-link{{n.id}}">
+                        {{ _("Развернуть →") }}
+                    </a>
+            </div>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const collapsedContent = document.getElementById("collapsed-content{{n.id}}");
+        const expandedContent = document.getElementById("expanded-content{{n.id}}");
+        const readMoreLink = document.getElementById("read-more-link{{n.id}}");
+
+        readMoreLink.addEventListener("click", function(event) {
+            event.preventDefault();
+            if (collapsedContent.style.display === "none") {
+                collapsedContent.style.display = "block";
+                expandedContent.style.display = "none";
+                readMoreLink.textContent = "{{ _("Развернуть →") }}";
+            } else {
+                collapsedContent.style.display = "none";
+                expandedContent.style.display = "block";
+                readMoreLink.textContent = "{{ _("Свернуть ←") }}";
+            }
+        });
+    });
+</script>

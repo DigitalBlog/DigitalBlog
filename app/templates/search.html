@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros with context %}
+
+{% block app_content %}
+<h1>Поиск: {{request.args.get('search', '', type=str)}}</h1>
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+    {% if not posts  %}
+    <div align="center"><p class="text-muted">Ничего не найдено</p><div>
+    {% endif %}
+    <div class="text-center">
+    <div class="pagination" >
+        {{ macros.pagination_widget(pagination, 'main.search', search=request.args.get('search')) }}
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+    <div class="row">
+            <div class="well well-sm">
+                <div class="media">
+                    <a class="pull-left" href="{{url_for('main.user', username=user.username)}}">
+                        <img loading="lazy" alt="{{user.username}} Avatar" class="img-round-small href" src="{{ user.avatar() }}">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ user.username }}
+                {% if not current_user.is_anonymous %}
+                <a style='font-size:18px;color:blue; float: right;text-decoration: None;' href="{{ url_for("main.send_message", recipient=user.username) }}"><i class="fa fa-envelope fa-fw href"></i></a>{% endif %}</h4>
+                     {% if (datetime.utcnow()-user.last_seen).total_seconds()<60 %}<p style="color: green;">в сети</p>{% else %}<p>был(а) в сети {{ moment(user.last_seen).format('LLL') }}</p>{% endif %}
+                    </div>
+                </div>
+        </div>
+	</div>

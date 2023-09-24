@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вы неподтверждены - DigitalBlog</title>
+    <style>
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6e6ff;
+}
+:where(.container, form, .input-field, header) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  row-gap: 20px;
+  max-width: 345px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.container header {
+  height: 65px;
+  width: 65px;
+  background: #a340f4;
+  color: #fff;
+  font-size: 2.5rem;
+  border-radius: 50%;
+}
+.container h4 {
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+  font-weight: 500;
+}
+.container p {
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  font-weight: 500;
+}
+.container a{
+  font-size: 1rem;
+  color: rgb(90, 70, 143);
+  text-decoration: none;
+  font-weight: 500;
+}
+    </style>
+</script>
+    {% include '_layout.html' %}
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <i class="fa-solid fa-triangle-exclamation fa-fw"></i>
+      </header>
+      <h4>Вы неподтверждены!</h4>
+      <p>Перед тем, как получить доступ к сайту, вам надо подтвердить свой email. Проверьте свою почту, вы должны были получить письмо с ссылкой для подтверждения.</p>
+        <p>Нужно ещё одно письмо? <a href="{{ url_for('auth.resend_confirmation') }}" class="alert-link">нажмите с здесь</a></p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,368 @@
+# English translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-08-13 10:28+0000\n"
+"PO-Revision-Date: 2023-07-07 08:25+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: app/__init__.py:34
+msgid "Войдите в аккаунт, для получения доступа к этой странице!"
+msgstr "Login to your account to access this page!"
+
+#: app/auth/forms.py:9 app/auth/forms.py:19
+msgid "Email:"
+msgstr "Email:"
+
+#: app/auth/forms.py:9 app/auth/forms.py:19 app/auth/forms.py:37
+msgid "Неправильный формат почты."
+msgstr "Incorrect email format."
+
+#: app/auth/forms.py:10 app/auth/forms.py:20
+msgid "Пароль:"
+msgstr "Password:"
+
+#: app/auth/forms.py:11 app/auth/forms.py:22 app/auth/forms.py:38
+msgid "Докажите, что вы не робот."
+msgstr "Prove you're not a robot."
+
+#: app/auth/forms.py:12 app/auth/forms.py:23
+msgid "Запомнить меня"
+msgstr "Remember me"
+
+#: app/auth/forms.py:13 app/templates/index-a.html:29
+msgid "Войти"
+msgstr "Login"
+
+#: app/auth/forms.py:16 app/main/forms.py:29 app/main/forms.py:71
+#: app/main/forms.py:118
+msgid "Имя пользователя:"
+msgstr "Username:"
+
+#: app/auth/forms.py:17 app/main/forms.py:30 app/main/forms.py:72
+#: app/main/forms.py:119
+msgid "Имя:"
+msgstr "Firstname:"
+
+#: app/auth/forms.py:18 app/main/forms.py:31 app/main/forms.py:73
+#: app/main/forms.py:120
+msgid "Фамилия:"
+msgstr "Lastname:"
+
+#: app/auth/forms.py:21
+msgid "Повторите пароль:"
+msgstr "Repeat password:"
+
+#: app/auth/forms.py:21 app/auth/forms.py:43
+msgid "Текст этого поля должен совпадать с верхним полем."
+msgstr "The text of this field must match the top field."
+
+#: app/auth/forms.py:24 app/templates/index-a.html:30
+msgid "Зарегистрироваться"
+msgstr "Register"
+
+#: app/auth/forms.py:29
+msgid "Пожалуйста, введите другое имя пользователя."
+msgstr "Please, choose another username."
+
+#: app/auth/forms.py:34
+msgid "Пожалуйста, введите другой email."
+msgstr "Please, choose another email."
+
+#: app/auth/forms.py:37
+msgid "Email"
+msgstr "Email"
+
+#: app/auth/forms.py:39
+msgid "Восстановить пароль"
+msgstr "Restore password"
+
+#: app/auth/forms.py:42
+msgid "Новый пароль"
+msgstr "New password"
+
+#: app/auth/forms.py:43
+msgid "Подтвердите новый пароль"
+msgstr "Confirm new password"
+
+#: app/auth/forms.py:44
+msgid "Сбросить пароль"
+msgstr "Reset password"
+
+#: app/auth/routes.py:80
+msgid "Неправильный email или пароль!"
+msgstr "Wrong email or password!"
+
+#: app/auth/routes.py:86
+msgid "Вы успешно вошли в аккаунт"
+msgstr "You are successfully logged in"
+
+#: app/auth/routes.py:93
+msgid "Вы вышли из аккаунта"
+msgstr "You logged out of the account"
+
+#: app/auth/routes.py:118
+msgid "Вы успешно зарегистрированы!"
+msgstr "You are successfully registered!"
+
+#: app/auth/routes.py:130
+msgid "Ссылка для подтверждения повреждена или срок её действия истёк."
+msgstr "The confirmation link is damaged or expired."
+
+#: app/auth/routes.py:133
+msgid "Ваш аккаунт уже подтверждён"
+msgstr "Your account is already verified"
+
+#: app/auth/routes.py:138
+msgid "Вы подтвердили свой аккаунт."
+msgstr "You have verified your account."
+
+#: app/auth/routes.py:149
+msgid "Новое письмо для подтверждения отправлено."
+msgstr "A new confirmation email has been sent."
+
+#: app/auth/routes.py:177
+msgid "Пароль успешно сброшен!"
+msgstr "Password successfully reset!"
+
+#: app/auth/routes.py:179
+msgid "Ссылка для сброса пароля повреждена или срок её действия истёк."
+msgstr "The password reset link is damaged or expired."
+
+#: app/errors/handlers.py:13
+msgid "403 - Доступ запрещён"
+msgstr "403 - Access Denied"
+
+#: app/errors/handlers.py:17
+msgid "404 - Страница не найдена"
+msgstr "404 - Page not found"
+
+#: app/errors/handlers.py:22
+msgid "500 - Ошибка сервера"
+msgstr "500 - Server error"
+
+#: app/main/forms.py:14
+msgid "Старый пароль:"
+msgstr "Old password:"
+
+#: app/main/forms.py:15
+msgid "Новый пароль:"
+msgstr "New password:"
+
+#: app/main/forms.py:16
+msgid "Повторите новый пароль:"
+msgstr "Confirm new password:"
+
+#: app/main/forms.py:17 app/main/forms.py:35 app/main/forms.py:127
+msgid "Сохранить"
+msgstr "Save"
+
+#: app/main/forms.py:28 app/main/forms.py:54 app/main/forms.py:102
+#: app/main/forms.py:145
+msgid "Файл не является изображением"
+msgstr "The file is not an image"
+
+#: app/main/forms.py:32 app/main/forms.py:74 app/main/forms.py:121
+msgid "Обо мне:"
+msgstr "About me:"
+
+#: app/main/forms.py:33
+msgid "Email(при изменении вы выйдете из аккаунта и он станет неподтверждённым):"
+msgstr ""
+"Email(if you change it, you will be logged out of your account and it "
+"will become unconfirmed):"
+
+#: app/main/forms.py:34 app/main/forms.py:122
+msgid "Кто может отправлять мне сообщения:"
+msgstr "Who can send me messages:"
+
+#: app/main/forms.py:34 app/templates/base.html:192
+msgid "Все пользователи"
+msgstr "All users"
+
+#: app/main/forms.py:34
+msgid "Подписчики"
+msgstr "Subscribers"
+
+#: app/main/forms.py:34
+msgid "Подписки"
+msgstr "Subscriptions"
+
+#: app/main/forms.py:34
+msgid "Друзья"
+msgstr "Friends"
+
+#: app/main/forms.py:34
+msgid "Никто"
+msgstr "No one"
+
+#: app/main/forms.py:51 app/main/forms.py:99 app/main/forms.py:142
+msgid "Файл слишком большой, макс.1MB"
+msgstr "The file is too large, max.1MB"
+
+#: app/main/forms.py:60 app/main/forms.py:108 app/main/forms.py:151
+msgid "Пожалуйста, введите другое имя"
+msgstr "Please, choose another username"
+
+#: app/main/forms.py:66 app/main/forms.py:114
+msgid "Пожалуйста, введите другой email"
+msgstr "Please, choose another email"
+
+#: app/main/forms.py:123
+msgid "Выделеное хранилище(в байтах):"
+msgstr "Dedicated storage(in bytes):"
+
+#: app/main/forms.py:124
+msgid "Блоггер"
+msgstr "Blogger"
+
+#: app/main/forms.py:125
+msgid "Заблокирован"
+msgstr "Banned"
+
+#: app/main/forms.py:126
+msgid "Причина блокировки:"
+msgstr "Banned reason"
+
+#: app/main/forms.py:154 app/main/forms.py:164 app/main/forms.py:192
+#: app/main/forms.py:217
+msgid "Отправить"
+msgstr "Send"
+
+#: app/main/forms.py:160
+msgid "Содержание публикации"
+msgstr "Post content"
+
+#: app/main/forms.py:162
+msgid "Показывать комментарии"
+msgstr "Show comments"
+
+#: app/main/forms.py:163
+msgid "Показать"
+msgstr "Show"
+
+#: app/main/forms.py:179 app/main/forms.py:207
+msgid "Файл слишком большой, макс.10MB"
+msgstr "The file is too big, max. 10MB"
+
+#: app/main/forms.py:183 app/main/forms.py:211
+msgid "Не хватает места, посетите \"Использование\""
+msgstr "Don't have enough space, please visit \"Usage\"."
+
+#: app/main/forms.py:190
+msgid "Тема сообщения:"
+msgstr "Message title:"
+
+#: app/main/forms.py:191
+msgid "Содержание сообщения:"
+msgstr "Message content:"
+
+#: app/main/forms.py:191
+msgid "Содержание сообщения"
+msgstr "Message content"
+
+#: app/main/forms.py:216
+msgid "Комментарий:"
+msgstr "Comment:"
+
+#: app/main/routes.py:165
+msgid "Вы прокомментировали эту публикацию"
+msgstr "You commented on this post"
+
+#: app/main/routes.py:215
+msgid "Комментарий удалён"
+msgstr "Comment deleted"
+
+#: app/main/routes.py:254 app/main/routes.py:306
+msgid "Изменения сохранены"
+msgstr "Changes saved"
+
+#: app/main/routes.py:366
+#, python-format
+msgid "Пользователь %(username)s удалён"
+msgstr "User %(username)s deleted"
+
+#: app/templates/base.html:179
+msgid "Искать"
+msgstr "Search"
+
+#: app/templates/base.html:189
+msgid "Создать публикацию"
+msgstr "Create post"
+
+#: app/templates/base.html:191
+msgid "Уведомления"
+msgstr "Notifications"
+
+#: app/templates/base.html:194
+msgid "Админ панель"
+msgstr "Admin panel"
+
+#: app/templates/base.html:196 app/templates/messages.html:4
+msgid "Личные сообщения"
+msgstr "Private Messages"
+
+#: app/templates/base.html:202
+msgid "Аккаунт"
+msgstr "Account"
+
+#: app/templates/base.html:203
+msgid "Профиль"
+msgstr "Profile"
+
+#: app/templates/base.html:204
+msgid "Использование"
+msgstr "Usage"
+
+#: app/templates/base.html:205
+msgid "Выйти"
+msgstr "Logout"
+
+#: app/templates/cookies.html:84
+msgid "Согласие на cookie"
+msgstr "Cookies consent"
+
+#: app/templates/cookies.html:87
+msgid "Этот веб-сайт использует файлы cookie для лучшей персонализации."
+msgstr "This website uses cookies for better personalization."
+
+#: app/templates/cookies.html:87
+msgid "Узнать больше..."
+msgstr "Learn more..."
+
+#: app/templates/cookies.html:90
+msgid "Принять"
+msgstr "Accept"
+
+#: app/templates/cookies.html:91
+msgid "Отклонить"
+msgstr "Desline"
+
+#: app/templates/index-a.html:25
+msgid "Главная"
+msgstr "Home"
+
+#: app/templates/index-a.html:26
+msgid "Команда"
+msgstr "Team"
+
+#: app/templates/index-a.html:41
+msgid "Сообщество для программистов и увлекающихся IT"
+msgstr "Community for programmers and IT enthusiasts"
+
+#: app/templates/index-a.html:54
+msgid "Простая в пользовании платформа для общения."
+msgstr "Easy-to-use platform for communication."
+

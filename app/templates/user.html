@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros with context %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<div class="container">
+<div id="main">
+ <div class="row" id="real-estates-detail">
+ <div class="col-lg-4 col-md-4 col-xs-12">
+ <div class="panel panel-default">
+ <div class="panel-heading">
+ <header class="panel-title">
+ <div class="text-center">
+ <strong>Пользователь сайта</strong>
+ </div>
+ </header>
+ </div>
+ <div class="panel-body">
+ <div class="text-center" id="author">
+ <img loading="lazy" alt="{{user.username}} Avatar" src="{{user.avatar()}}">
+  <h3><span style="text-align: center;">{% if not current_user.is_anonymous %}&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}{{ user.username }}{% if not current_user.is_anonymous %}</span><a class='fa fa-envelope' style='font-size:24px;color:blue; float: right;text-decoration: None;' href="{{ url_for("main.send_message", recipient=user.username) }}"></a>{% endif %}</h3>
+ {% if user.about_me %}<p style="text-align: center;">{{ user.about_me }}</p>{% endif %}
+ <p class="sosmed-author">
+          {% if not current_user.is_anonymous %}
+          {% if current_user.admin() %}
+                <p><form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.edit_user_profile', user_id=user.id) }}" method="get">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Редактировать профиль(Админ)', class_='btn btn-default') }}
+                    </form></p>
+           {% endif %}
+         {% if not current_user.is_anonymous %}
+         {% if current_user.moderator() %}
+<a class="btn btn-default" data-toggle="modal" data-target="#SendNotify{{user.id}}">Отправить уведомление</a>
+           {% endif %}
+          {% endif %}
+          {% if user == current_user %}
+                <p><form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.edit_profile') }}" method="get">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Редактировать профиль', class_='btn btn-default') }}
+                    </form></p>
+                <p><form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.change_password') }}" method="get">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Изменить пароль', class_='btn btn-default') }}
+                 </form></p>
+                {% elif not current_user.is_following(user) %}
+                <p>
+                    <form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.follow', username=user.username, url=request.url) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Подписаться', class_='btn btn-danger') }}
+                    </form>
+                </p>
+                {% else %}
+                <p>
+                    <form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.unfollow', username=user.username, url=request.url) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Отписаться', class_='btn btn-default') }}
+                    </form>
+                </p>
+                {% endif %}
+     {% endif %}
+ </p>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="col-lg-8 col-md-8 col-xs-12">
+ <div class="panel">
+ <div class="panel-body">
+ <h3>О пользователе</h3>
+<hr>
+ <table class="table table-th-block">
+ <tbody>
+ <tr><td class="active">Зарегистрирован:</td><td>{{ moment(user.member_since).format('LLL') }}</td></tr>
+ <tr><td class="active">Последняя активность:</td><td>{{ moment(user.last_seen).format('LLL') }}</td></tr>
+ <tr><td class="active">Роль:</td><td>{% if user.main_admin() %}Главный администратор{% elif user.admin() %}Администратор{% elif user.moderator() %}Модератор{% else %}Пользователь{% endif %}</td></tr>
+ <tr><td class="active">Подписчики:</td><td>{{user.followers.count()}} </td></tr>
+ <tr><td class="active">Подписки:</td><td>{{user.followed.count()}} </td></tr>
+ <tr><td class="active">Друзья:</td><td>{{user.friends().count()}} </td></tr>
+</tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+ </div>
+</div>
+</div>
+{% if user.blogger %}
+<h3>Все публикации пользователя({{len(posts)}}):</h3>
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+{% if not posts  %}
+    <div align="center"><p class="text-muted">Ничего не найдено</p></div>
+    {% endif %}
+    <div class="text-center">
+    <div class="pagination" >
+        <ul class="pagination">
+            <li{% if not pagination_posts.has_prev %} class="disabled"{% endif %}>
+                <a {% if not pagination_posts.has_prev %}class="no-href"{% endif %} href="{% if pagination_posts.has_prev %}{{ url_for('main.user', page_posts="1", username=user.username, page_comments=page_comments) }}{% else %}#{% endif %}">
+                    &laquo;&laquo; 
+                </a>
+            </li>
+            <li{% if not pagination_posts.has_prev %} class="disabled"{% endif %}>
+                <a {% if not pagination_posts.has_prev %}class="no-href"{% endif %} href="{% if pagination_posts.has_prev %}{{ url_for('main.user', page_posts=pagination_posts.prev_num, username=user.username, page_comments=page_comments) }}{% else %}#{% endif %}">
+                    &laquo; 
+                </a>
+            </li>
+            {% for p in pagination_posts.iter_pages() %}
+                {% if p %}
+                    {% if p == pagination_posts.page %}
+                    <li class="active">
+                        <a class="no-href" href="#">{{ p }}</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ url_for('main.user', page_posts = p, username=user.username, page_comments=page_comments) }}">{{ p }}</a>
+                    </li>
+                    {% endif %}
+                {% else %}
+                <li class="disabled"><a class="no-href" href="#">&hellip;</a></li>
+                {% endif %}
+            {% endfor %}
+            <li{% if not pagination_posts.has_next %} class="disabled"{% endif %}>
+                <a {% if not pagination_posts.has_next %}class="no-href"{% endif %} href="{% if pagination_posts.has_next %}{{ url_for('main.user', page_posts=pagination_posts.next_num, username=user.username, page_comments=page_comments) }}{% else %}#{% endif %}">
+                     &raquo;
+                </a>
+            </li>
+            <li{% if not pagination_posts.has_next %} class="disabled"{% endif %}>
+                <a {% if not pagination_posts.has_next %}class="no-href"{% endif %} href="{% if pagination_posts.has_next %}{{ url_for('main.user', page_posts=pagination_posts.pages, username=user.username, page_comments=page_comments) }}{% else %}#{% endif %}">
+                     &raquo;&raquo;
+                </a>
+            </li>
+        </ul>
+    </div>
+    </div>
+{% endif %}
+    <h3>Все комментарии пользователя ({{len(comments)}}):</h3>
+    {% for comment in comments %}
+        {% include '_comment.html' %}
+    {% endfor %}
+{% if not comments  %}
+    <div align="center"><p class="text-muted">Ничего не найдено</p></div>
+    {% endif %}
+    <div class="text-center">
+    <div class="pagination" >
+        <ul class="pagination">
+            <li{% if not pagination_comments.has_prev %} class="disabled"{% endif %}>
+                <a {% if not pagination_comments.has_prev %}class="no-href"{% endif %} href="{% if pagination_comments.has_prev %}{{ url_for('main.user', page_comments="1", username=user.username, page_posts=page_posts) }}{% else %}#{% endif %}">
+                    &laquo;&laquo; 
+                </a>
+            </li>
+            <li{% if not pagination_comments.has_prev %} class="disabled"{% endif %}>
+                <a {% if not pagination_comments.has_prev %}class="no-href"{% endif %} href="{% if pagination_comments.has_prev %}{{ url_for('main.user', page_comments=pagination_comments.prev_num, username=user.username, page_posts=page_posts) }}{% else %}#{% endif %}">
+                    &laquo; 
+                </a>
+            </li>
+            {% for p in pagination_comments.iter_pages() %}
+                {% if p %}
+                    {% if p == pagination_comments.page %}
+                    <li class="active">
+                        <a class="no-href" href="#">{{ p }}</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{{ url_for('main.user', page_comments = p, username=user.username, page_posts=page_posts) }}">{{ p }}</a>
+                    </li>
+                    {% endif %}
+                {% else %}
+                <li class="disabled"><a class="no-href" href="#">&hellip;</a></li>
+                {% endif %}
+            {% endfor %}
+            <li{% if not pagination_comments.has_next %} class="disabled"{% endif %}>
+                <a {% if not pagination_comments.has_next %}class="no-href"{% endif %} href="{% if pagination_comments.has_next %}{{ url_for('main.user', page_comments=pagination_comments.next_num, username=user.username, page_posts=page_posts) }}{% else %}#{% endif %}">
+                     &raquo;
+                </a>
+            </li>
+            <li{% if not pagination_comments.has_next %} class="disabled"{% endif %}>
+                <a {% if not pagination_comments.has_next %}class="no-href"{% endif %} href="{% if pagination_comments.has_next %}{{ url_for('main.user', page_comments=pagination_comments.pages, username=user.username, page_posts=page_posts) }}{% else %}#{% endif %}">
+                     &raquo;&raquo;
+                </a>
+            </li>
+        </ul>
+    </div>
+    </div>
+{% if not current_user.is_anonymous %}
+{% if current_user.moderator() %}
+<div class="modal fade" id="SendNotify{{user.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="SendNotify{{user.id}}Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Отправить уведомление
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button></h5>
+        </div>
+        <form class="form" onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.send_notify', user_id=user.id, url=request.url) }}" method="POST">
+        <div class="modal-body">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_field(formNotify.title) }}
+            {{ wtf.form_field(formNotify.body) }}
+        </div>
+        <div class="modal-footer">
+              {{ wtf.form_field(formNotify.submit, class_="btn btn-success") }}
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endif %}
+{% endblock %}

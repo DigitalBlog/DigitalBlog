@@ -1,0 +1,59 @@
+    <table class="table table-hover">
+            <td>
+                {% set author_link %}
+                    <span class="user_popup">
+                        <a class="userLink" href="{{ url_for('main.user', username=message.author.username) }}">
+                            {{ message.author.username }}
+                        </a>
+                    </span>
+                {% endset %}
+                {% set recipient_link %}
+                    <span class="user_popup">
+                        <a class="userLink" href="{{ url_for('main.user', username=message.recipient.username) }}">
+                            {{ message.recipient.username }}
+                        </a>
+                    </span>
+                {% endset %}
+                {% if message.author == current_user or current_user.admin() %}
+                <a data-toggle="modal" data-target="#deletemessage{{message.id}}">
+                    <span class="fa fa-trash" aria-hidden="true" style='font-size:18px;color:red; float:right' data-toggle="tooltip" data-placement="bottom" title="Удалить"></span>
+                </a>
+                <a href="{{ url_for('main.update_message', message_id=message.id) }}">
+                    <span style='font-size:18px;color:blue; float:right' class="fa fa-pencil href" aria-hidden="true"  data-toggle="tooltip" data-placement="bottom" title="Редактировать"></span>
+                </a>
+                <div class="modal fade" id="deletemessage{{message.id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deletemessage{{message.id}}Label">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>Удалить сообщение?</h5>
+        </div>
+        <div class="modal-footer">
+          <form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.delete_message', message_id=message.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Удалить">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="post-thumbnail">
+                <a href="{{ url_for('main.user', username=message.author.username) }}">
+                    <img loading="lazy" alt="{{message.author.username}} Avatar" class="img-round-small profile-thumbnail href" src="{{ message.author.avatar() }}" />
+                </a>
+               </div>
+                <h3 class="post-title"><a href="{{ url_for('main.message_detail', message_id=message.id)}}" class="post-link">{{message.title}}&nbsp;{% if current_user.last_message_read_time < message.timestamp and message.author!=current_user %}<span style="background-color: rgb(36 233 17 / 8%); color: #46ba4f;" class="badge">{{ _("Новое!") }}</span>{% endif %}</a></h3>    
+                <div class="post-date"><strong><i class="fa fa-user fa-fw" aria-hidden="true"></i> <i class="fa fa-arrow-right fa-fw" aria-hidden="true"></i> <i class="fa fa-user fa-fw" aria-hidden="true"></i>
+                {% if message.author == current_user %}
+                Вы написали {{recipient_link}}
+                {% elif message.recipient==current_user %}
+                {{author_link}} написал(а) вам
+                {% else %}
+                {{author_link}} написал(а) {{recipient_link}}
+                {% endif %}
+                </strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;</div>
+                <div class="post-date"><strong><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> {{ moment(message.timestamp).format('LLL') }}</strong>{% if message.timestamp!=message.last_update_time %}&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-pencil fa-fw"></i> {{ moment(message.last_update_time).format('LLL') }}</strong>{% endif %}</div>
+                </td>     
+    </table>

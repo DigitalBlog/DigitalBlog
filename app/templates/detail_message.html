@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<head>
+<script defer src="https://digitalblog.github.io/cdn/tinymce/js/tinymce/tinymce.min.js"></script>
+<script defer src="https://digitalblog.github.io/cdn/js/preview.js"></script>
+</head>
+<div>
+            </td>
+        </tr>        
+       {% set sender_link %}
+                    <span class="user_popup">
+                        <a class="userLink" href="{{ url_for('main.user', username=message.author.username) }}">
+                            {{ message.author.username }}
+                        </a>
+                    </span>
+                {% endset %}
+                {% set recipient_link %}
+                    <span class="user_popup">
+                        <a class="userLink" href="{{ url_for('main.user', username=message.recipient.username) }}">
+                            {{ message.recipient.username }}
+                        </a>
+                    </span> 
+                {% endset %}
+      <div class="post-thumbnail">
+                <a href="{{ url_for('main.user', username=message.author.username) }}">
+                    <img loading="lazy" alt="{{message.author.username}} Avatar" class="img-round-small profile-thumbnail href" src="{{ message.author.avatar() }}" />
+                </a>
+               </div>
+                {% if message.author == current_user or current_user.admin() %}            
+        <a data-toggle="modal" data-target="#deleteModal"><span class="fa fa-trash" aria-hidden="true" style='font-size:24px;color:red;float:right;' data-toggle="tooltip" data-placement="bottom" title="Удалить"></span></a>
+        <a href="{{ url_for('main.update_message', message_id=message.id) }}"><span style='font-size:24px;color:blue;float:right;' class="fa fa-pencil href" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Редактировать"></span></a>
+               <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Удалить сообщение?
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button></h5>
+        </div>
+        <div class="modal-footer">
+          <form onsubmit="document.getElementById('loader').classList.toggle('done');" action="{{ url_for('main.delete_message', message_id=message.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Удалить">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+                <h3 class="post-title"><a href="{{ url_for('main.message_detail', message_id=message.id)}}" class="post-link">{{message.title}}</a></h3>    
+                <div class="post-date"><strong><i class="fa fa-user fa-fw" aria-hidden="true"></i> 
+                {% if message.author == current_user %}
+                Вы <i class="fa fa-arrow-right fa-fw" aria-hidden="true"></i> <i class="fa fa-user" aria-hidden="true"></i><a class="userLink" href="{{ url_for('main.user', username=message.recipient.username) }}">
+                            {{ message.recipient.username }}
+                        </a> {% if message.read==True %}<span class="label label-success" data-toggle="tooltip" data-placement="bottom" title="">Прочитано</span>{% elif message.recipient.last_message_read_time>message.timestamp %}<span class="label label-primary">Просмотрено</span>{% else %}<span class="label label-default">Непрочитано</span>{% endif %}
+                {% elif message.recipient==current_user %}
+                <a class="userLink" href="{{ url_for('main.user', username=message.author.username) }}">
+                            {{ message.author.username }}
+                        </a><i class="fa fa-arrow-right fa-fw" aria-hidden="true"></i> <i class="fa fa-user" aria-hidden="true"></i> Вы
+                {% else %}
+                <a class="userLink" href="{{ url_for('main.user', username=message.author.username) }}">
+                            {{ message.author.username }}
+                        </a><i class="fa fa-arrow-right fa-fw" aria-hidden="true"></i> <i class="fa fa-user" aria-hidden="true"></i><a class="userLink" href="{{ url_for('main.user', username=message.recipient.username) }}">
+                            {{ message.recipient.username }}
+                        </a>
+                {% endif %}
+                </strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;</div>
+                <div class="post-date"><strong><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> {{ moment(message.timestamp).format('LLL') }}</strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-pencil fa-fw"></i> {{ moment(message.last_update_time).format('LLL') }}</strong></div>
+      </div>
+      <hr>
+      <div>
+          <textarea id="preview">{{ message.body }}</textarea>
+      </div>
+      <hr>
+      {% if file %}
+
+      <a href="{{url_for('main.download_file_from_message', message_id=message.id)}}" class="btn btn-warning no-href"><i class="fa fa-download fa-fw"></i> ФАЙЛ</a>
+      <a href="{{url_for('main.file_from_message', message_id=message.id)}}" target="_blank" class="btn btn-primary no-href"><i class="fa-regular fa-eye fa-fw"></i> ФАЙЛ</a>
+      {% endif %}
+{% endblock %}

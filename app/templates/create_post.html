@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import "_macros.html" as macros with context %}
+{% block scripts %}
+{{ super() }}
+<script defer src="https://digitalblog.github.io/cdn/tinymce/js/tinymce/tinymce.min.js"></script>
+<script defer src="https://digitalblog.github.io/cdn/js/tinymce_setup.js"></script>
+{% endblock %}
+{% block app_content %}
+<h1>{{ title }}{% if post %}{% if post.author == current_user or current_user.admin() %}            
+        <a data-toggle="modal" data-target="#deletepost"><span class="fa fa-trash" aria-hidden="true" style='font-size:24px;color:red;float:right;' data-toggle="tooltip" data-placement="bottom" title="Удалить"></span></a>
+        <div class="modal fade" id="deletepost" data-backdrop="static" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deletepostLabel">Удалить публикацию?
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button></h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+          <form onsubmit="document.querySelector('.preloader').classList.remove('preloader-remove');" action="{{ url_for('main.delete_post', post_id=post.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Удалить">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endif %}{% endif %}</h1>
+{{ macros.tinyMCEWidget(form) }}
+{% endblock %}
