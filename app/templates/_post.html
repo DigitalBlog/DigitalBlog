@@ -1,4 +1,3 @@
-{% if post.show or current_user.admin() or current_user==post.author %}
 <table class="table table-hover">
             <td>
                 {% set user_link %}
@@ -38,4 +37,3 @@
                 <div class="post-date"><strong><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> {{ moment(post.timestamp).format('LLL') }}</strong>{% if post.timestamp!=post.last_update_time %}&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-pencil fa-fw"></i> {{ moment(post.last_update_time).format('LLL') }}</strong>{% endif %}&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa fa-eye fa-fw" aria-hidden="true"></i> {{post.views.count()}}</strong>&nbsp;&nbsp;<strong style="color:#999">·</strong>&nbsp;&nbsp;<strong><i class="fa-solid fa-comments fa-fw" aria-hidden="true"></i> {{post.comments.count()}}</strong></div>
                 </td>
     </table>
-{% endif %}

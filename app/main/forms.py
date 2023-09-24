@@ -172,7 +172,7 @@ class PostForm(FlaskForm):
     tag = StringField()
     allow_comments=BooleanField(_l('Показывать комментарии'))
     anonymous_show=BooleanField(_l('Показывать неавторизованным пользователям'))
-    show=BooleanField(_l('Скрыть'))
+    show=BooleanField(_l('Показывать'))
     submit = SubmitField(_l("Отправить"))
 
     def __init__(self, original_id,original_stroage_used,original_stroage_granted, *args, **kwargs):

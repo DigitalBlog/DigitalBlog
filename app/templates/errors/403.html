@@ -272,7 +272,9 @@
             <h2>Доступ запрещён!</h2>
             <p>Доступ запрещён, возможно у вас недостаточно на это прав. Считаете что это ошибка? Свяжитесь через чат в правом нижнем углу.
             </p>
-            <a href="/" class="btn green">ГЛАВНАЯ</a>
+            <form onsubmit="document.getElementById('loader').classList.toggle('done');" action="/" method="GET">
+              <button class="btn green">ГЛАВНАЯ</button>
+            </form>
             <br>
           </div>
         </div>

@@ -12,7 +12,7 @@ import os
 @bp.before_app_request
 def before_request():
     g.locale = str(get_locale())
-    if request.endpoint and request.endpoint != 'static' and request.endpoint!="auth.register" and request.endpoint=="auth.login":
+    if request.endpoint and request.endpoint != 'static' and request.endpoint!="auth.register" and request.endpoint!="auth.login":
         # f_1=Stuff.query.filter_by(name="Access_id").first()
         # if not f_1:
         #     s=Stuff(name="Access_id", content="1")

@@ -1,254 +1,66 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-		<!--	created with www.mysitemapgenerator.com	-->
-		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-	<loc>https://digitalblog.repl.co/</loc>
-	<lastmod>2023-09-20T21:13:33+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/posts</loc>
-	<lastmod>2023-09-20T21:13:33+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/auth/login</loc>
-	<lastmod>2023-09-20T21:13:33+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/auth/register</loc>
-	<lastmod>2023-09-20T21:13:33+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/users</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/nikm</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/8</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/qwerty</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/7</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/6</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/5</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/4</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/posts?page=2</loc>
-	<lastmod>2023-09-20T21:13:54+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/ITQ</loc>
-	<lastmod>2023-09-20T21:14:06+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/mikhaillav</loc>
-	<lastmod>2023-09-20T21:14:06+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/timka123</loc>
-	<lastmod>2023-09-20T21:14:06+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/good_horse</loc>
-	<lastmod>2023-09-20T21:14:06+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/users?page=2</loc>
-	<lastmod>2023-09-20T21:14:06+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/users?page=3</loc>
-	<lastmod>2023-09-20T21:14:06+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/users?page=4</loc>
-	<lastmod>2023-09-20T21:14:06+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/8/body</loc>
-	<lastmod>2023-09-20T21:14:08+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/qwerty?page_posts=2&amp;page_comments=1</loc>
-	<lastmod>2023-09-20T21:14:09+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/1</loc>
-	<lastmod>2023-09-20T21:14:09+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/auth/forget-password-request</loc>
-	<lastmod>2023-09-20T21:14:10+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/7/body</loc>
-	<lastmod>2023-09-20T21:14:10+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/5/body</loc>
-	<lastmod>2023-09-20T21:14:11+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/4/body</loc>
-	<lastmod>2023-09-20T21:14:12+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/3</loc>
-	<lastmod>2023-09-20T21:14:12+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/2</loc>
-	<lastmod>2023-09-20T21:14:12+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/posts?page=1</loc>
-	<lastmod>2023-09-20T21:14:12+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/frontendcode</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/nikitka</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/zxchepuha</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/dimidrosh</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/Horman</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/users?page=1</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/System</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/Dimus</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/kaliexp</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/purplemra3b</loc>
-	<lastmod>2023-09-20T21:14:17+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/Ulti</loc>
-	<lastmod>2023-09-20T21:14:18+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/chuuchin</loc>
-	<lastmod>2023-09-20T21:14:18+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/spoomtimer</loc>
-	<lastmod>2023-09-20T21:14:18+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/123</loc>
-	<lastmod>2023-09-20T21:14:18+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/Kirillik</loc>
-	<lastmod>2023-09-20T21:14:18+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/user/qwerty?page_posts=1&amp;page_comments=1</loc>
-	<lastmod>2023-09-20T21:14:21+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/1/body</loc>
-	<lastmod>2023-09-20T21:14:22+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/6/body</loc>
-	<lastmod>2023-09-20T21:14:25+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/2/body</loc>
-	<lastmod>2023-09-20T21:14:34+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
-<url>
-	<loc>https://digitalblog.repl.co/post/3/body</loc>
-	<lastmod>2023-09-20T21:14:55+01:00</lastmod>
-	<priority>0.6</priority>
-</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url><loc>https://digitalblog.repl.co</loc><lastmod>2023-09-24T13:22:56+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/auth/login</loc><lastmod>2023-09-24T13:22:56+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/auth/register</loc><lastmod>2023-09-24T13:22:56+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/posts</loc><lastmod>2023-09-24T13:22:57+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/users</loc><lastmod>2023-09-24T13:22:58+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/7</loc><lastmod>2023-09-24T13:22:59+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/ITQ</loc><lastmod>2023-09-24T13:22:59+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/6</loc><lastmod>2023-09-24T13:23:00+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/auth/forget-password-request</loc><lastmod>2023-09-24T13:23:00+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/users?page=4</loc><lastmod>2023-09-24T13:23:01+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/users?page=1</loc><lastmod>2023-09-24T13:23:01+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/posts?page=2</loc><lastmod>2023-09-24T13:23:01+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/mikhaillav</loc><lastmod>2023-09-24T13:23:02+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/nikm</loc><lastmod>2023-09-24T13:23:03+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/users?page=2</loc><lastmod>2023-09-24T13:23:03+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/dimidrosh</loc><lastmod>2023-09-24T13:23:04+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/good_horse</loc><lastmod>2023-09-24T13:23:04+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/users?page=3</loc><lastmod>2023-09-24T13:23:05+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/6/file</loc><lastmod>2023-09-24T11:41:37+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/7/body</loc><lastmod>2023-09-24T13:23:06+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/6/body</loc><lastmod>2023-09-24T13:23:06+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/timka123</loc><lastmod>2023-09-24T13:23:07+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/4</loc><lastmod>2023-09-24T13:23:07+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/3</loc><lastmod>2023-09-24T13:23:08+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/Kirillik</loc><lastmod>2023-09-24T13:23:09+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/posts?page=1</loc><lastmod>2023-09-24T13:23:09+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/5</loc><lastmod>2023-09-24T13:23:10+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/ITQ?page_posts=2&amp;amp;page_comments=1</loc><lastmod>2023-09-24T13:23:11+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/1</loc><lastmod>2023-09-24T13:23:11+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/ITQ?page_posts=1&amp;amp;page_comments=1</loc><lastmod>2023-09-24T13:23:12+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/4/body</loc><lastmod>2023-09-24T13:23:12+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/2</loc><lastmod>2023-09-24T13:23:13+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/4/file/download</loc><lastmod>2023-09-24T11:43:42+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/zxchepuha</loc><lastmod>2023-09-24T13:23:14+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/1/file/download</loc><lastmod>2023-09-24T11:12:46+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/3/file</loc><lastmod>2023-09-24T11:32:04+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/2/body</loc><lastmod>2023-09-24T13:23:15+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/Horman</loc><lastmod>2023-09-24T13:23:16+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/1/file</loc><lastmod>2023-09-24T11:12:46+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/6/file/download</loc><lastmod>2023-09-24T11:41:37+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/spoomtimer</loc><lastmod>2023-09-24T13:23:18+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/3/file/download</loc><lastmod>2023-09-24T11:32:04+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/chuuchin</loc><lastmod>2023-09-24T13:23:19+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/2/file</loc><lastmod>2023-09-24T11:20:42+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/1/body</loc><lastmod>2023-09-24T13:23:19+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/5/file</loc><lastmod>2023-09-24T11:38:21+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/kaliexp</loc><lastmod>2023-09-24T13:23:20+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/nikitka</loc><lastmod>2023-09-24T13:23:21+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/Dimus</loc><lastmod>2023-09-24T13:23:22+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/2/file/download</loc><lastmod>2023-09-24T11:20:42+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/System</loc><lastmod>2023-09-24T13:23:23+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/purplemra3b</loc><lastmod>2023-09-24T13:23:23+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/3/body</loc><lastmod>2023-09-24T13:23:23+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/5/file/download</loc><lastmod>2023-09-24T11:38:21+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/5/body</loc><lastmod>2023-09-24T13:23:24+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/user/Ulti</loc><lastmod>2023-09-24T13:23:25+00:00</lastmod></url>
+<url><loc>https://digitalblog.repl.co/post/4/file</loc><lastmod>2023-09-24T11:43:42+00:00</lastmod></url>
 </urlset>

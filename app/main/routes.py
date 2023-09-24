@@ -34,7 +34,7 @@ def posts():
             order_query=Post.timestamp
         else:
             order_query=Post.timestamp.desc()
-        posts = Post.query.filter_by(anonymous_show=True).order_by(order_query).paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+        posts = Post.query.filter_by(show=True).filter_by(anonymous_show=True).order_by(order_query).paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
         return render_template('index.html', description="Сообщество для программистов и увлекающихся IT. Подписывайтесь, создавайте публикации, обсуждайте, ставьте лайки, пишите личные сообщения, а также возможность подкреплять файлы к публикациям и сообщениям.", title='Все публикации', posts=posts.items, pagination=posts, order=order)
     else:
         return redirect(url_for('main.index'))
@@ -65,7 +65,10 @@ def index():
             order_query=Post.timestamp
         else:
             order_query=Post.timestamp.desc()
-        posts = query.order_by(order_query).paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+        if current_user.admin():
+            posts = query.order_by(order_query).paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+        else:
+            posts = query.order_by(order_query).filter_by(show=True).paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
         return render_template('index.html', title='Главная страница', posts=posts.items, pagination=posts, show_posts=show_posts, order=order, Post=Post)
     else:
         return render_template("index-a.html")
@@ -88,10 +91,12 @@ def request_bloger():
 @bp.route('/post/<int:post_id>/body', methods=['GET', 'POST'])
 def post_body(post_id):
 	post = Post.query.filter_by(id=post_id).first_or_404()
-	if post.show or current_user.admin() or current_user==post.author:
-		pass
+	if current_user.is_anonymous:
+		if post.show==False:
+			abort(403)
 	else:
-		abort(403)
+		if post.show==False and not current_user.admin():
+			abort(403)
 	return render_template('post_body.html', body=post.body, title=post.title)
 
 @bp.route('/user/<int:user_id>/avatar')
@@ -103,12 +108,10 @@ def avatar(user_id):
 def post_detail(post_id):
     post = Post.query.filter_by(id=post_id).first_or_404()
     if current_user.is_anonymous:
-        if not post.anonymous_show or not post.show:
+        if post.show==False:
             abort(403)
     else:
-        if post.show or current_user.admin() or current_user==post.author:
-            pass
-        else:
+        if post.show==False and not current_user.admin():
             abort(403)
     if not current_user.is_anonymous:
         current_user.view(post)
@@ -177,10 +180,10 @@ def user(username):
     page_posts = request.args.get('page_posts', 1, type=int)
     page_comments = request.args.get('page_comments', 1, type=int)
     if current_user.is_anonymous:
-        posts = user.posts.filter_by(anonymous_show=True).order_by(Post.timestamp.desc()).paginate(page=page_posts, per_page=3, error_out=False)
+        posts = user.posts.filter_by(show=True).filter_by(anonymous_show=True).order_by(Post.timestamp.desc()).paginate(page=page_posts, per_page=3, error_out=False)
         comments = Comment.query.join(Post).filter(Comment.commented_by == user.id, Comment.commented_on == Post.id, Post.anonymous_show == True).order_by(Comment.timestamp.desc()).paginate(page=page_comments, per_page=3, error_out=False)
     else:
-        posts = user.posts.order_by(Post.timestamp.desc()).paginate(page=page_posts, per_page=3, error_out=False)
+        posts = user.posts.filter_by(show=True).order_by(Post.timestamp.desc()).paginate(page=page_posts, per_page=3, error_out=False)
         comments = user.comments.order_by(Comment.timestamp.desc()).paginate(page=page_comments, per_page=3, error_out=False)
     form = EmptyForm()
     formNotify = SendNotifyForm()
@@ -212,7 +215,7 @@ def user_popup(username):
 def search():
     page = request.args.get('page', 1, type=int)
     sss = '%' + request.args.get('search', '', type=str) + '%'
-    posts = Post.query.filter(or_(Post.body.like(sss), Post.title.like(sss))).paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+    posts = Post.query.filter_by(show=True).filter(or_(Post.body.like(sss), Post.title.like(sss))).paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
     return render_template('search.html', posts=posts.items, page=page, pagination=posts, title=f"Поиск: {request.args.get('search', '', type=str)}", str=str)
 
 @bp.route('/user/edit', methods=['GET', 'POST'])
@@ -290,7 +293,7 @@ def edit_user_profile(user_id):
         	user.anonymous_show = form.anonymous_show.data
         	user.show_profile_id = form.profile_access.data
         if form.photo.data:
-            filename=f'app/static/{current_user.id}{os.path.splitext(form.photo.data.filename)[-1]}'
+            filename=f'app/static/{user.id}{os.path.splitext(form.photo.data.filename)[-1]}'
             user.set_avatar(filename)
         db.session.commit()
         flash(_('Изменения сохранены'), "success")
@@ -753,8 +756,7 @@ def download_file_from_post(post_id):
     try:
         return send_file(f'uploads/post-{post_id}/{post.filename}', as_attachment=True)
     except:
-        flash("К этой публикаци нет прикреплённого файла", "warning")
-        return redirect(url_for('main.post_detail', post_id=post_id))
+        abort(404)
 
 @bp.route('/post/<int:post_id>/file')
 def file_from_post(post_id):
@@ -762,8 +764,7 @@ def file_from_post(post_id):
     try:
         return send_file(f'uploads/post-{post_id}/{post.filename}')
     except:
-        flash("К этой публикаци нет прикреплённого файла", "warning")
-        return redirect(url_for('main.post_detail', post_id=post_id))
+        abort(404)
 
 @bp.route('/message/<int:message_id>/file/download')
 @login_required
@@ -774,8 +775,7 @@ def download_file_from_message(message_id):
     try:
         return send_file(f'uploads/message-{message_id}/{message.filename}', as_attachment=True)
     except:
-        flash("К этому сообщению нет прикреплённого файла", "warning")
-        return redirect(url_for('main.message_detail', message_id=message_id))
+        abort(404)
 
 @bp.route('/message/<int:message_id>/file')
 @login_required
@@ -786,8 +786,7 @@ def file_from_message(message_id):
     try:
         return send_file(f'uploads/message-{message_id}/{message.filename}')
     except:
-        flash("К этому сообщению нет прикреплённого файла", "warning")
-        return redirect(url_for('main.message_detail', message_id=message_id))
+        abort(404)
 
 @bp.route('/post/<int:post_id>/file/delete')
 @login_required
@@ -864,6 +863,9 @@ def recount_stroage(user_id):
 def run_query():
     if not current_user.main_admin():
         abort(403)
+    # users=User.query
+    # for user in users:
+    #     user.add_notify("Ваш аккаунт восстановлен", "Ваш аккаунт был восстановлен после потери базы данных, ваши данные не были переданны третьим лицам и остаются конфиденциальными, если заметите отсутсвие каких-либо данных или ошибки, то смело пишите в техподдержку!\n С уважением, разработчик DigitalBlog")
     return "Query runned"
 
 @bp.route("/user/<int:user_id>/send_notify", methods=["POST"])
