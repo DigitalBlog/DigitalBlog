@@ -317,7 +317,8 @@ class Post(db.Model):
     rate_count = db.Column(db.Integer, default=0)
     show=db.Column(db.Boolean, default=False)
     allow_comments=db.Column(db.Boolean, default=True)
-    favourites_count= db.Column(db.Integer, default=0)
+    favourites_count = db.Column(db.Integer, default=0)
+    description = db.Column(db.String)
     favourites = db.relationship('PostFavourites', backref='post', lazy='dynamic', cascade = "all,delete")
 
     def __repr__(self):

@@ -16,6 +16,7 @@ import re
 from app.email import send_email
 from flask_babel import format_datetime
 from time import sleep
+from bs4 import BeautifulSoup
 
 @bp.route('/posts', methods=['GET', 'POST'])
 def posts():
@@ -97,7 +98,7 @@ def post_body(post_id):
 	else:
 		if post.show==False and not current_user.admin():
 			abort(403)
-	return render_template('post_body.html', body=post.body, title=post.title)
+	return render_template('post_body.html', body=post.body, title=post.title, description=post.description)
 
 @bp.route('/user/<int:user_id>/avatar')
 def avatar(user_id):
@@ -133,7 +134,7 @@ def post_detail(post_id):
             flash(_('Вы прокомментировали эту публикацию'), "success")
             return redirect(url_for('main.post_detail', post_id=post.id))
     comments = post.comments.order_by(Comment.timestamp.desc()).paginate(page=page, per_page=3, error_out=False)
-    return render_template('detail_post.html', title=post.title, post=post, form=form, comments=comments.items, pagination=comments, file=file, m=markdown.markdown)
+    return render_template('detail_post.html', title=post.title, post=post, form=form, comments=comments.items, pagination=comments, file=file, m=markdown.markdown, description=post.description)
 
 #@bp.route('/redirect/', methods=['GET', 'POST'])
 #@login_required
@@ -594,6 +595,10 @@ def update_post(post_id):
         post.allow_comments = form.allow_comments.data
         post.show = form.show.data
         post.anonymous_show = form.anonymous_show.data
+        soup = BeautifulSoup(form.body.data, 'html.parser')
+        text = soup.get_text()
+        cleaned_text = ' '.join(text.split())
+        post.description = cleaned_text
         if old_title!=post.title or old_body!=post.body:
             post.last_update_time = datetime.utcnow()
         f=form.file.data
@@ -722,8 +727,11 @@ def new_post():
         abort(403)
     form = PostForm(current_user.id,current_user.stroage_used,current_user.stroage_granted)
     if form.validate_on_submit():
+        soup = BeautifulSoup(form.body.data, 'html.parser')
+        text = soup.get_text()
+        cleaned_text = ' '.join(text.split())
         time=datetime.utcnow()
-        post = Post(title=form.title.data, body=form.body.data, author=current_user, timestamp=time, last_update_time=time, allow_comments=form.allow_comments.data, show=form.show.data, anonymous_show = form.anonymous_show.data)
+        post = Post(title=form.title.data, body=form.body.data, author=current_user, timestamp=time, last_update_time=time, allow_comments=form.allow_comments.data, show=form.show.data, anonymous_show = form.anonymous_show.data, description=cleaned_text)
         f=form.file.data
         db.session.add(post)
         db.session.commit()
@@ -769,9 +777,9 @@ def file_from_post(post_id):
 @bp.route('/message/<int:message_id>/file/download')
 @login_required
 def download_file_from_message(message_id):
-    if current_user != Message.query.get_or_404(message_id).author and current_user != Message.query.get_or_404(message_id).recipient and not current_user.main_admin():
-        abort(403)
     message=Message.query.get_or_404(message_id)
+    if current_user != message.author and current_user != message.recipient and not current_user.main_admin():
+        abort(403)
     try:
         return send_file(f'uploads/message-{message_id}/{message.filename}', as_attachment=True)
     except:
@@ -780,9 +788,9 @@ def download_file_from_message(message_id):
 @bp.route('/message/<int:message_id>/file')
 @login_required
 def file_from_message(message_id):
-    if current_user != Message.query.get_or_404(message_id).author and current_user != Message.query.get_or_404(message_id).recipient and not current_user.main_admin():
-        abort(403)
     message=Message.query.get_or_404(message_id)
+    if current_user != message.author and current_user != message.recipient and not current_user.main_admin():
+        abort(403)
     try:
         return send_file(f'uploads/message-{message_id}/{message.filename}')
     except:
@@ -791,9 +799,9 @@ def file_from_message(message_id):
 @bp.route('/post/<int:post_id>/file/delete')
 @login_required
 def delete_file_from_post(post_id):
-    if current_user != Post.query.get_or_404(post_id).author and not current_user.admin():
-        abort(403)
     post=Post.query.get_or_404(post_id)
+    if current_user != post.author and not current_user.admin():
+        abort(403)
     try:
         os.remove(f'app/uploads/post-{post_id}/{post.filename}')
         os.rmdir(f"app/uploads/post-{post_id}") 
@@ -811,9 +819,9 @@ def delete_file_from_post(post_id):
 @bp.route('/message/<int:message_id>/file/delete')
 @login_required
 def delete_file_from_message(message_id):
-    if current_user != Message.query.get_or_404(message_id).author and not current_user.main_admin():
-        abort(403)
     message=Message.query.get_or_404(message_id)
+    if current_user != message.author and not current_user.main_admin():
+        abort(403)
     try:
         os.remove(f'app/uploads/message-{message_id}/{message.filename}')
         os.rmdir(f"app/uploads/message-{message_id}")
@@ -863,9 +871,6 @@ def recount_stroage(user_id):
 def run_query():
     if not current_user.main_admin():
         abort(403)
-    # users=User.query
-    # for user in users:
-    #     user.add_notify("Ваш аккаунт восстановлен", "Ваш аккаунт был восстановлен после потери базы данных, ваши данные не были переданны третьим лицам и остаются конфиденциальными, если заметите отсутсвие каких-либо данных или ошибки, то смело пишите в техподдержку!\n С уважением, разработчик DigitalBlog")
     return "Query runned"
 
 @bp.route("/user/<int:user_id>/send_notify", methods=["POST"])
