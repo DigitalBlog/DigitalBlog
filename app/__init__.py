@@ -7,12 +7,23 @@ from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
 from config import Config
 import os
+import sentry_sdk
 from flask_bcrypt import Bcrypt
 
 
 def get_locale():
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
 
+sentry_sdk.init(
+    dsn="https://2358793f94946e3634df18442fab0861@o4506003987955712.ingest.sentry.io/4506003991166976",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=0.01,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1,
+)
 
 db = SQLAlchemy()
 migrate = Migrate()
