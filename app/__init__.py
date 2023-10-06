@@ -1,5 +1,3 @@
-import logging
-from logging.handlers import SMTPHandler, RotatingFileHandler
 from flask import Flask, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -9,27 +7,35 @@ from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
 from config import Config
 import os
-import click
 from flask_bcrypt import Bcrypt
 
+
 def get_locale():
-    return "ru"
-    #return request.accept_languages.best_match(current_app.config['LANGUAGES'])
+    return request.accept_languages.best_match(current_app.config['LANGUAGES'])
+
 
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 bcrypt = Bcrypt()
-login.login_view = 'auth.login'
-login.login_message = _l('Войдите в аккаунт, для получения доступа к этой странице!')
-login.login_message_category = 'danger'
+login.login_view = "auth.login"
+login.login_message = _l("Войдите в аккаунт, для получения доступа к этой странице!")
+login.login_message_category = "danger"
 login.session_protection = "basic"
 bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
 
+
 def create_app(config_class=Config):
-    app = Flask(__name__, template_folder = os.path.join(os.path.dirname(os.path.realpath(__file__)), "templates"), static_url_path='', static_folder='static')
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "templates"
+        ),
+        static_url_path="",
+        static_folder="static",
+    )
     app.config.from_object(config_class)
     db.init_app(app)
     migrate.init_app(app, db)
@@ -39,15 +45,19 @@ def create_app(config_class=Config):
     babel.init_app(app, locale_selector=get_locale)
 
     from app.errors import bp as errors_bp
+
     app.register_blueprint(errors_bp)
 
     from app.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    app.register_blueprint(auth_bp, url_prefix="/auth")
 
     from app.main import bp as main_bp
+
     app.register_blueprint(main_bp)
 
     from app.cli import bp as cli_bp
+
     app.register_blueprint(cli_bp)
-    
+
     return app

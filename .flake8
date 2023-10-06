@@ -1,0 +1,8 @@
+[flake8]
+exclude =
+    migrations,
+    __pycache__,
+    manage.py,
+    venv,
+    .pythonlibs,
+inline-quotes = "
