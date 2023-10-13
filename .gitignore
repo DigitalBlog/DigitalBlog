@@ -6,7 +6,6 @@ migrations/
 replit.nix
 .replit
 poetry.lock
-pyproject.toml
 .cache/
 replit_zip_error_log.txt
 .upm/
