@@ -144,6 +144,13 @@ a{
       <div class="checkbox__body">Я согласен на обработку персональных данных*</div>
       </label>
     </div>
+      <div class="terms">
+        <label class="checkbox style-e">
+        {{ form.agree(type="checkbox") }}
+        <div class="checkbox__checkmark"></div>
+        <div class="checkbox__body">Я принимаю <a href="{{ url_for("auth.user_agreement") }}">пользовательское соглашение</a>*</div>
+        </label>
+      </div>
     <div id="ReCaptcha">
     </div>
         {% for message in form.recaptcha.errors %}

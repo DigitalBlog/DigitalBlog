@@ -291,3 +291,7 @@ def reset_password(token):
             return redirect(url_for("auth.login"))
         return redirect(url_for("auth.login"))
     return render_template("auth/resetPassword.html", form=form, title="Вход")
+
+@bp.route("/user_agreement", methods=["GET", "POST"])
+def user_agreement():
+    return render_template("auth/user_agreement.html", title="Пользовательское соглашение")

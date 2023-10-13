@@ -311,7 +311,7 @@ class EmptyForm(FlaskForm):
 
 class PostForm(FlaskForm):
     file = FileField()
-    title = StringField(validators=[DataRequired(), Length(1, 40)])
+    title = StringField(validators=[DataRequired(), Length(1, 100)])
     body = TextAreaField(render_kw={"placeholder": _l("Содержание публикации")})
     tag = StringField()
     allow_comments = BooleanField(_l("Показывать комментарии"))
@@ -394,6 +394,6 @@ class MessageForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     comment = PageDownField(
-        _l("Комментарий:"), validators=[DataRequired(), Length(min=1, max=350)]
+        _l("Комментарий:"), validators=[DataRequired(), Length(min=1, max=500)]
     )
     submit = SubmitField(_l("Отправить"))

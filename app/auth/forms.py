@@ -62,7 +62,7 @@ class RegistrationForm(FlaskForm):
     recaptcha = RecaptchaField(
         validators=[Recaptcha(message=_l("Докажите, что вы не робот."))]
     )
-    agree = BooleanField(_l("Запомнить меня"), validators=[DataRequired()])
+    agree = BooleanField(_l("Я согласен на обработку персональных данных*"), validators=[DataRequired()])
     submit = SubmitField(_l("Зарегистрироваться"))
 
     def validate_username(self, username):
