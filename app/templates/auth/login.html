@@ -1,140 +1,163 @@
 {% import "bootstrap/wtf.html" as wtf %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Войдите в DigitalBlog, чтобы начать создавать публикации, общаться с друзьями и узнавать что-то новое.">
-  <link rel="canonical" href="https://digitalblog.repl.co/auth/login" />
-  <meta name="title" content="Вход - DigitalBlog">
-  <link rel="preload" href="https://digitalblog.github.io/cdn/css/auth.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://digitalblog.github.io/cdn/css/auth.css"></noscript>
-  <title>Вход - DigitalBlog</title>
-  <style>
-.checkbox.style-e {
-  display: inline-block;
-  margin-top: 10px;
-  padding-bottom: 0.7rem;
-  position: relative;
-  padding-right: 7.7rem;
-  padding-left: 2.3rem;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.checkbox.style-e input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-.checkbox.style-e input:checked ~ .checkbox__checkmark {
-  background-color: #b184e0;
-}
-.checkbox.style-e input:checked ~ .checkbox__checkmark:after {
-  left: 18px;
-}
-.checkbox.style-e:hover input ~ .checkbox__checkmark {
-  background-color: #eee;
-}
-.checkbox.style-e:hover input:checked ~ .checkbox__checkmark {
-  background-color: #bc8cef;
-}
-.checkbox.style-e .checkbox__checkmark {
-  position: absolute;
-  top: 1px;
-  left: 0;
-  height: 1rem;
-  width: 2rem;
-  background-color: #eee;
-  transition: background-color 0.25s ease;
-  border-radius: 11px;
-}
-.checkbox.style-e .checkbox__checkmark:after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  top: 3px;
-  width: 0.6rem;
-  height: 0.6rem;
-  display: block;
-  background-color: #fff;
-  border-radius: 50%;
-  transition: left 0.25s ease;
-}
-.checkbox.style-e .checkbox__body {
-  color: #333;
-  line-height: 1.4;
-  font-size: 0.9rem;
-  transition: color 0.25s ease;
-}
-</style>
-{% include '_layout.html' %}
-</head>
-<body>
-<div class="wrapper">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Войдите в DigitalBlog, чтобы начать создавать публикации, общаться с друзьями и узнавать что-то новое."
+    />
+    <link rel="canonical" href="https://digitalblog.repl.co/auth/login" />
+    <meta name="title" content="Вход - DigitalBlog" />
+    <link
+      rel="preload"
+      href="https://digitalblog.github.io/cdn/css/auth.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://digitalblog.github.io/cdn/css/auth.css"
+    /></noscript>
+    <title>Вход - DigitalBlog</title>
+    <style>
+      .checkbox.style-e {
+        display: inline-block;
+        margin-top: 10px;
+        padding-bottom: 0.7rem;
+        position: relative;
+        padding-right: 7.7rem;
+        padding-left: 2.3rem;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .checkbox.style-e input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      .checkbox.style-e input:checked ~ .checkbox__checkmark {
+        background-color: #b184e0;
+      }
+      .checkbox.style-e input:checked ~ .checkbox__checkmark:after {
+        left: 18px;
+      }
+      .checkbox.style-e:hover input ~ .checkbox__checkmark {
+        background-color: #eee;
+      }
+      .checkbox.style-e:hover input:checked ~ .checkbox__checkmark {
+        background-color: #bc8cef;
+      }
+      .checkbox.style-e .checkbox__checkmark {
+        position: absolute;
+        top: 1px;
+        left: 0;
+        height: 1rem;
+        width: 2rem;
+        background-color: #eee;
+        transition: background-color 0.25s ease;
+        border-radius: 11px;
+      }
+      .checkbox.style-e .checkbox__checkmark:after {
+        content: "";
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        width: 0.6rem;
+        height: 0.6rem;
+        display: block;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: left 0.25s ease;
+      }
+      .checkbox.style-e .checkbox__body {
+        color: #333;
+        line-height: 1.4;
+        font-size: 0.9rem;
+        transition: color 0.25s ease;
+      }
+    </style>
+    {% include '_layout.html' %}
+  </head>
+  <body>
+    <div class="wrapper">
       <a href="/">
-<img loading="lazy" src="https://digitalblog.github.io/cdn/img/programming.webp" class="href" alt="Logo" width="72" height="72">
-</a>
-    <h1>Вxод</h1>
-    <form onsubmit="document.getElementById('loader').classList.toggle('done');" method="POST">
-        {{ form.hidden_tag() }}
-          {{ form.email(class="email", type="text",required='required',placeholder="Email*") }}
-          {% for message in form.email.errors %}
-      <div class="has-error">
-        <p class="help-block">{{ message }}</p>
-      </div>
-          {% endfor %}
-          {{ form.password(type="password",required='required',placeholder="Пароль*") }}
-          {% for message in form.password.errors %}
-      <div class="has-error">
-        <p class="help-block">{{ message }}</p>
-      </div>
-          {% endfor %}
+        <img
+          loading="lazy"
+          src="https://digitalblog.github.io/cdn/img/programming.webp"
+          class="href"
+          alt="Logo"
+          width="72"
+          height="72"
+        />
+      </a>
+      <h1>Вxод</h1>
+      <form
+        onsubmit="document.getElementById('loader').classList.toggle('done');"
+        method="POST"
+      >
+        {{ form.hidden_tag() }} {{ form.email(class="email",
+        type="text",required='required',placeholder="Email*") }} {% for message
+        in form.email.errors %}
+        <div class="has-error">
+          <p class="help-block">{{ message }}</p>
+        </div>
+        {% endfor %} {{
+        form.password(type="password",required='required',placeholder="Пароль*")
+        }} {% for message in form.password.errors %}
+        <div class="has-error">
+          <p class="help-block">{{ message }}</p>
+        </div>
+        {% endfor %}
         <div class="terms">
-      <label class="checkbox style-e">
-      {{ form.remember_me(type="checkbox") }}
-      <div class="checkbox__checkmark"></div>
-      <div class="checkbox__body">Запомнить меня</div>
-      </label>
-    </div>
-    <div id="ReCaptcha">
-    </div>
+          <label class="checkbox style-e">
+            {{ form.remember_me(type="checkbox") }}
+            <div class="checkbox__checkmark"></div>
+            <div class="checkbox__body">Запомнить меня</div>
+          </label>
+        </div>
+        <div id="ReCaptcha"></div>
         {% for message in form.recaptcha.errors %}
-      <div class="has-error">
-        <p class="help-block">{{ message }}</p>
+        <div class="has-error">
+          <p class="help-block">{{ message }}</p>
+        </div>
+        {% endfor %} {{ wtf.form_field(form.submit, class="button") }}
+      </form>
+      <div class="member">
+        Ещё нет аккаунта? <a href="/auth/register">Зарегистрируйтесь!</a>
       </div>
-          {% endfor %}
-    {{ wtf.form_field(form.submit, class="button") }}
-    </form>
-    <div class="member">
-      Ещё нет аккаунта? <a href="/auth/register">Зарегистрируйтесь!</a>
+      <div class="member">
+        <a href="{{ url_for('auth.forget_password_request') }}"
+          >Забыли пароль?</a
+        >
+      </div>
     </div>
-    <div class="member">
-      <a href="{{ url_for('auth.forget_password_request') }}">Забыли пароль?</a>
-    </div>
-  </div>
-<script>
-window.addEventListener("load", () => {
-    var groupDiv = document.getElementById('ReCaptcha');
-    if (groupDiv) {
-        var scriptElement = document.createElement('script');
-        scriptElement.src = '//www.google.com/recaptcha/api.js?hl={{g.locale}}';
-        groupDiv.appendChild(scriptElement);
-        var recaptchaDiv = document.createElement('div');
-        recaptchaDiv.className = 'g-recaptcha';
-        recaptchaDiv.setAttribute('data-sitekey', '{{site_key}}');
-        recaptchaDiv.setAttribute('data-theme', 'light');
-        recaptchaDiv.setAttribute('data-type', 'image');
-        recaptchaDiv.setAttribute('data-size', 'normal');
-        recaptchaDiv.setAttribute('data-tabindex', '10');
-        groupDiv.appendChild(recaptchaDiv);
-    }
-});
-</script>
-</body>
+    <script>
+      window.addEventListener("load", () => {
+        var groupDiv = document.getElementById("ReCaptcha");
+        if (groupDiv) {
+          var scriptElement = document.createElement("script");
+          scriptElement.src =
+            "//www.google.com/recaptcha/api.js?hl={{g.locale}}";
+          groupDiv.appendChild(scriptElement);
+          var recaptchaDiv = document.createElement("div");
+          recaptchaDiv.className = "g-recaptcha";
+          recaptchaDiv.setAttribute("data-sitekey", "{{site_key}}");
+          recaptchaDiv.setAttribute("data-theme", "light");
+          recaptchaDiv.setAttribute("data-type", "image");
+          recaptchaDiv.setAttribute("data-size", "normal");
+          recaptchaDiv.setAttribute("data-tabindex", "10");
+          groupDiv.appendChild(recaptchaDiv);
+        }
+      });
+    </script>
+  </body>
 </html>
