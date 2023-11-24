@@ -8,6 +8,7 @@ from flask_babel import Babel, lazy_gettext as _l
 from config import Config
 import os
 from flask_bcrypt import Bcrypt
+from flask_caching import Cache
 
 
 def get_locale():
@@ -37,6 +38,7 @@ login.session_protection = "basic"
 bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
+cache = Cache(config={'CACHE_TYPE': 'SimpleCache'})
 
 
 def create_app(config_class=Config):
@@ -54,6 +56,7 @@ def create_app(config_class=Config):
     login.init_app(app)
     bootstrap.init_app(app)
     moment.init_app(app)
+    cache.init_app(app)
     babel.init_app(app, locale_selector=get_locale)
 
     from app.errors import bp as errors_bp

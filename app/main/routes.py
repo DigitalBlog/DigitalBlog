@@ -15,8 +15,9 @@ from flask import (
 )
 from flask_login import current_user, login_required
 from flask_babel import get_locale, _
+from flask_caching import CachedResponse
 from langdetect import detect, LangDetectException
-from app import db
+from app import db, cache
 from app.main.forms import (
     EditProfileForm,
     EmptyForm,
@@ -90,62 +91,70 @@ def posts():
         return redirect(url_for("main.index"))
 
 
-@bp.route("/", methods=["GET", "POST"])
+@bp.route("/~", methods=["GET", "POST"])
+@login_required
 def index():
-    if not current_user.is_anonymous:
-        page = request.args.get("page", 1, type=int)
-        show_posts = request.cookies.get("show_posts", "1")
-        order = request.cookies.get("order_posts", "1")
-        if show_posts == "4":
-            query = current_user.followed_posts()
-        elif show_posts == "3":
-            query = Post.query.filter_by(author=current_user)
-        elif show_posts == "2":
-            query = Post.query.filter(
-                PostFavourites.user_id == current_user.id,
-                PostFavourites.post_id == Post.id,
-            )
-        else:
-            query = Post.query
-        if order == "6":
-            order_query = Post.last_update_time
-        elif order == "5":
-            order_query = Post.last_update_time.desc()
-        elif order == "4":
-            order_query = Post.favourites_count
-        elif order == "3":
-            order_query = Post.favourites_count.desc()
-        elif order == "2":
-            order_query = Post.timestamp
-        else:
-            order_query = Post.timestamp.desc()
-        if current_user.admin():
-            posts = query.order_by(order_query).paginate(
+    page = request.args.get("page", 1, type=int)
+    show_posts = request.cookies.get("show_posts", "1")
+    order = request.cookies.get("order_posts", "1")
+    if show_posts == "4":
+        query = current_user.followed_posts()
+    elif show_posts == "3":
+        query = Post.query.filter_by(author=current_user)
+    elif show_posts == "2":
+        query = Post.query.filter(
+            PostFavourites.user_id == current_user.id,
+            PostFavourites.post_id == Post.id,
+        )
+    else:
+        query = Post.query
+    if order == "6":
+        order_query = Post.last_update_time
+    elif order == "5":
+        order_query = Post.last_update_time.desc()
+    elif order == "4":
+        order_query = Post.favourites_count
+    elif order == "3":
+        order_query = Post.favourites_count.desc()
+    elif order == "2":
+        order_query = Post.timestamp
+    else:
+        order_query = Post.timestamp.desc()
+    if current_user.admin():
+        posts = query.order_by(order_query).paginate(
+            page=page,
+            per_page=current_app.config["POSTS_PER_PAGE"],
+            error_out=False,
+        )
+    else:
+        posts = (
+            query.order_by(order_query)
+            .filter_by(show=True)
+            .paginate(
                 page=page,
                 per_page=current_app.config["POSTS_PER_PAGE"],
                 error_out=False,
             )
-        else:
-            posts = (
-                query.order_by(order_query)
-                .filter_by(show=True)
-                .paginate(
-                    page=page,
-                    per_page=current_app.config["POSTS_PER_PAGE"],
-                    error_out=False,
-                )
-            )
-        return render_template(
-            "index.html",
-            title="Главная страница",
-            posts=posts.items,
-            pagination=posts,
-            show_posts=show_posts,
-            order=order,
-            Post=Post,
         )
-    else:
-        return render_template("index-a.html")
+    return render_template(
+        "index.html",
+        title="Главная страница",
+        posts=posts.items,
+        pagination=posts,
+        show_posts=show_posts,
+        order=order,
+        Post=Post,
+    )
+
+
+@bp.route("/")
+def index_a():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    return CachedResponse(
+        response=make_response(render_template('index-a.html')),
+        timeout=3600,
+    )
 
 
 @bp.route("/moderation")

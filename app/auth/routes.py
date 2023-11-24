@@ -11,7 +11,7 @@ from flask import (
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_babel import _
-from app import db, get_locale, current_app
+from app import db, get_locale, current_app, cache
 from app.auth import bp
 from app.auth.forms import (
     LoginForm,
@@ -32,7 +32,7 @@ def before_request():
         and request.endpoint != "static"
         and request.endpoint != "auth.register"
         and request.endpoint != "auth.login"
-        and request.endpoint != "main.index"
+        and request.endpoint != "main.index_a"
     ):
         # f_1=Stuff.query.filter_by(name="Access_id").first()
         # if not f_1:
@@ -56,7 +56,6 @@ def before_request():
         #     db.session.commit()
         f_1 = Stuff.query.filter_by(name="Access_id").first().content
         f_2 = Stuff.query.filter_by(name="Access_comment").first().content
-        f_3 = Stuff.query.filter_by(name="Demand_id").first().content
         if current_user.is_anonymous and f_1 != "1":
             return render_template("errors/503.html", text=f_2)
         if f_1 == "2":
@@ -292,6 +291,10 @@ def reset_password(token):
         return redirect(url_for("auth.login"))
     return render_template("auth/resetPassword.html", form=form, title="Вход")
 
+
+#@cache.cached(timeout=1200)
 @bp.route("/user_agreement", methods=["GET", "POST"])
 def user_agreement():
-    return render_template("auth/user_agreement.html", title="Пользовательское соглашение")
+    return render_template(
+        "auth/user_agreement.html", title="Пользовательское соглашение"
+    )

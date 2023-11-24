@@ -9,7 +9,6 @@ python = ">=3.10.0,<3.11"
 werkzeug = "^2.3.7"
 click = "^8.1.7"
 flask-migrate = "^4.0.5"
-flask-pagedown = "^0.4.0"
 flask-wtf = "^1.1.1"
 flask-bcrypt = "^1.0.1"
 langdetect = "^1.0.9"
@@ -29,6 +28,8 @@ psycopg2-binary = "2.9.7"
 email-validator = "2.0.0.post2"
 bs4 = "^0.0.1"
 alembic = "^1.12.0"
+flask-caching = "2.1.0"
+flask-pagedown = "0.4.0"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md
