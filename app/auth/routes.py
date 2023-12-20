@@ -33,6 +33,9 @@ def before_request():
         and request.endpoint != "auth.register"
         and request.endpoint != "auth.login"
         and request.endpoint != "main.index_a"
+        and request.endpoint != "auth.logout"
+        and request.endpoint != "auth.forget_password_request"
+        and request.endpoint != "auth.reset_password"
     ):
         # f_1=Stuff.query.filter_by(name="Access_id").first()
         # if not f_1:
